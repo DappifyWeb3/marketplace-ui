@@ -1,0 +1,56 @@
+import React, { memo, useContext } from 'react';
+import { DappifyContext } from 'react-dappify';
+import { Grid, Typography, Badge } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { useNavigate } from '@reach/router';
+import UserAvatar from 'components/UserAvatar';
+import { cropText } from 'react-dappify/utils/format';
+
+//react functional component
+const UserSales = ({ user, index }) => {
+    const { project } = useContext(DappifyContext);
+    const network = project?.getNetworkContext('marketplace');
+    const navigate = useNavigate();
+    const theme = useTheme();
+
+
+    return (
+        <>
+            <Grid container direction="row" justify="left" spacing={1}>
+                <Grid item className="avatar__index">
+                    {index + 1}.
+                </Grid>
+                <Grid item>
+                    <UserAvatar user={user} />
+                </Grid>
+                <Grid item>  
+                    <Grid container direction="column" justify="left" spacing={1}>
+                        <Grid item>
+                            <Typography fontWeight="900"   
+                                        sx={{ 
+                                            fontSize: "16px", 
+                                            fontWeight: '600',
+                                            "&:hover": {
+                                                color: theme.palette.primary.main,
+                                                cursor: 'pointer'
+                                            }
+                                        }} 
+                                        onClick={() => navigate(`/profile/${user.wallet}`)}>
+                                {cropText(user.username, 12)}
+                            </Typography>
+                            <Typography sx={{ 
+                                fontSize: "14px", 
+                                opacity: 0.7, 
+                                fontWeight: '400' 
+                            }}>
+                                {user.totalSales.toFixed(2)} {network.nativeCurrency.symbol}
+                            </Typography>
+                        </Grid>
+                    </Grid>                             
+                </Grid>
+            </Grid>
+        </>     
+    );
+};
+
+export default memo(UserSales);

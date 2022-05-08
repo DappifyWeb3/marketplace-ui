@@ -1,0 +1,127 @@
+.menu__link {
+    transition: 0.25s;
+    &::after {
+        position: absolute;
+        content: "";
+        width: 75%;
+        height: 1px;
+        top: 80%;
+        left: 10%;
+        transition: transform 0.25s;
+        transform: scaleX(0);
+        transform-origin: center;
+    }
+    &:hover::after {
+        transform: scaleX(1);
+        transform-origin: center;
+      }
+}
+
+.fade__in img {
+    animation: fadeIn 2.5s;
+    -webkit-animation: fadeIn 2.5s;
+    -moz-animation: fadeIn 2.5s;
+    -o-animation: fadeIn 2.5s;
+    -ms-animation: fadeIn 2.5s;
+  }
+  @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+.loading__bar {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    left: 0;
+}
+
+.circular__button {
+  &.MuiButton-root {
+    min-width: 20px;
+    padding: 6px;
+  }
+}
+
+.item__wrap {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 275px;
+    overflow: hidden;
+    span {
+      transition: transform 1s; /* Animation */
+    }
+    &:hover span {
+      transform: scale(1.05);
+    }
+    div{
+      transition: transform 1s; /* Animation */
+    }
+    &:hover div {
+      transform: scale(1.05);
+    }
+}
+
+.nft__placeholder {
+  height: 275px;
+  width: 100%;
+  line-height: 275px;
+  font-size: 1.3em;
+  background: #6767c8;
+  background: linear-gradient(161deg, #6767c8 35%, #00d4ff 100%);
+  cursor: pointer;
+}
+
+.nft__card {
+  min-width: 275px;
+  max-width: 375px;
+  height: 390px;
+  overflow: hidden;
+}
+
+.super__size {
+  width: 100%;
+}
+
+.super__size:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.author__card {
+  word-break: break-word;
+}
+
+.audio__controller {
+  width: 100%;
+  margin-top: -100px;
+  border-radius: 0px;
+}
+
+.content__modal {
+  width: 450px;
+}
