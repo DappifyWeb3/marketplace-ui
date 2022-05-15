@@ -2,10 +2,13 @@ import React, { useState, useContext} from 'react';
 import { DappifyContext } from 'react-dappify';
 import Logo from 'components/Logo';
 import { Box } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
 
 const Footer = ({t}) => {
+    const theme = useTheme();
     const { configuration } = useContext(DappifyContext);
     const [year] = useState(new Date().getFullYear());
+    const [footerColor] = useState(theme.palette.secondary.main);
 
     const getHeader = (column) => configuration.footer[column]['title'];
 
@@ -63,12 +66,12 @@ const Footer = ({t}) => {
                                 <div className="de-flex-col">
                                     {configuration &&(
                                         <div className="social-icons">
-                                            {configuration?.social?.facebook && <span onClick={()=> window.open(configuration?.social?.facebook, "_self")}><i className="fa fa-facebook fa-lg"></i></span> }
-                                            {configuration?.social?.twitter && <span onClick={()=> window.open(configuration?.social?.twitter, "_self")}><i className="fa fa-twitter fa-lg"></i></span> }
-                                            {configuration?.social?.instagram && <span onClick={()=> window.open(configuration?.social?.instagram, "_self")}><i className="fa fa-instagram fa-lg"></i></span> }
-                                            {configuration?.social?.pinterest && <span onClick={()=> window.open(configuration?.social?.pinterest, "_self")}><i className="fa fa-pinterest fa-lg"></i></span> }
-                                            {configuration?.social?.email && <span><a href={`mailto: ${configuration?.social?.email}`}><i className="fa fa-envelope fa-lg"></i></a></span> }
-                                            {configuration?.social?.telegram && <span onClick={()=> window.open(configuration?.social?.telegram, "_self")}><i className="fa fa-paper-plane fa-lg"></i></span> }
+                                            {configuration?.social?.facebook && <span onClick={()=> window.open(configuration?.social?.facebook, "_self")}><i className="fa fa-facebook fa-lg" style={{ background: footerColor }} ></i></span> }
+                                            {configuration?.social?.twitter && <span onClick={()=> window.open(configuration?.social?.twitter, "_self")}><i className="fa fa-twitter fa-lg" style={{ background: footerColor }} ></i></span> }
+                                            {configuration?.social?.instagram && <span onClick={()=> window.open(configuration?.social?.instagram, "_self")}><i className="fa fa-instagram fa-lg" style={{ background: footerColor }} ></i></span> }
+                                            {configuration?.social?.pinterest && <span onClick={()=> window.open(configuration?.social?.pinterest, "_self")}><i className="fa fa-pinterest fa-lg" style={{ background: footerColor }} ></i></span> }
+                                            {configuration?.social?.email && <span><a href={`mailto: ${configuration?.social?.email}`}><i className="fa fa-envelope fa-lg" style={{ background: footerColor }} ></i></a></span> }
+                                            {configuration?.social?.telegram && <span onClick={()=> window.open(configuration?.social?.telegram, "_self")}><i className="fa fa-paper-plane fa-lg" style={{ background: footerColor }} ></i></span> }
                                         </div>)
                                     }
                                 </div>

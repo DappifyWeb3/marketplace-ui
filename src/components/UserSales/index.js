@@ -1,10 +1,10 @@
 import React, { memo, useContext } from 'react';
 import { DappifyContext } from 'react-dappify';
-import { Grid, Typography, Badge } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from '@reach/router';
 import UserAvatar from 'components/UserAvatar';
-import { cropText } from 'react-dappify/utils/format';
+import { cropText, formatAddress } from 'react-dappify/utils/format';
 
 //react functional component
 const UserSales = ({ user, index }) => {
@@ -12,7 +12,6 @@ const UserSales = ({ user, index }) => {
     const network = project?.getNetworkContext('marketplace');
     const navigate = useNavigate();
     const theme = useTheme();
-
 
     return (
         <>
@@ -36,7 +35,8 @@ const UserSales = ({ user, index }) => {
                                             }
                                         }} 
                                         onClick={() => navigate(`/profile/${user.wallet}`)}>
-                                {cropText(user.username, 12)}
+                                {user.username && cropText(user.username, 12)}
+                                {!user.username && formatAddress(user.wallet)}
                             </Typography>
                             <Typography sx={{ 
                                 fontSize: "14px", 

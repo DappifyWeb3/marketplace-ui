@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { CircularProgress, Grid, Dialog, DialogContent, Button, DialogTitle, DialogContentText } from '@mui/material';
+import { Grid, Dialog, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
 import * as actions from 'store/actions';
 import { withdrawNft } from "store/actions/thunks";
 import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
+import ModalActions from 'components/ModalActions';
 
 const ModalWithdraw = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
@@ -16,7 +17,7 @@ const ModalWithdraw = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
     useEffect(() => {
       dispatch(actions.editPriceNft.cancel());
-    },[isOpen])
+    },[dispatch, isOpen])
 
     const handleAction = async() => {
         await dispatch(withdrawNft(nft));
@@ -40,23 +41,13 @@ const ModalWithdraw = ({ isOpen=false, onClose, isBid, nft, t }) => {
               <OperationResult state={withdrawState} t={t} />
             </Grid>
           </DialogContentText>
-          <Grid container spacing={1} sx={{ mt: 3 }}>
-            <Grid item xs={6}>
-              <Button variant="outlined" color="error" onClick={onClose} fullWidth>{t('Cancel')}</Button>
-            </Grid>
-            <Grid item xs={6}>
-              {!isWithdrawing && (
-                <Button variant="contained" color="error" onClick={handleAction} fullWidth>
-                    {t('Confirm')}
-                </Button>
-              )}
-              {isWithdrawing && (
-                  <Button disabled variant="contained" color="error" onClick={handleAction} fullWidth>
-                    {t('Please wait')} <CircularProgress size={24} sx={{ ml: 2 }} color="inherit" />
-                  </Button> 
-              )}
-            </Grid>
-        </Grid>
+          <ModalActions   state={withdrawState} 
+                          onClose={onClose} 
+                          handleAction={handleAction} 
+                          t={t} 
+                          confirmLabel="Confirm" 
+                          loading={isWithdrawing} 
+          />
         </DialogContent>
       </Dialog>
     );

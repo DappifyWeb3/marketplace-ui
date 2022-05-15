@@ -17,12 +17,6 @@ export const fetchCollection = (shortUrl) => async (dispatch) => {
   dispatch(actions.getCollection.request());
 
   try {
-    // let filter = collectionId ? 'id='+collectionId : '';
-    // // const { data } = await Axios.get(`${api.baseUrl + api.hotCollections}?${filter}`, {
-    // //   cancelToken: Canceler.token,
-    // //   params: {}
-    // // });
-    // // // // console.log(data);
     const data = await Collection.getCollection(shortUrl);
     dispatch(actions.getCollection.success(data));
   } catch (err) {
@@ -34,12 +28,6 @@ export const fetchHotCollections = (collectionId) => async (dispatch) => {
   dispatch(actions.getHotCollections.request());
 
   try {
-    // let filter = collectionId ? 'id='+collectionId : '';
-    // const { data } = await Axios.get(`${api.baseUrl + api.hotCollections}?${filter}`, {
-    //   cancelToken: Canceler.token,
-    //   params: {}
-    // });
-    // // // console.log(data);
     const data = await Collection.getHotCollections();
     dispatch(actions.getHotCollections.success(data));
   } catch (err) {
@@ -48,17 +36,9 @@ export const fetchHotCollections = (collectionId) => async (dispatch) => {
 };
 
 export const fetchMyCollections = () => async (dispatch) => {
-  // // // console.log('invoked/?');
   dispatch(actions.getMyCollections.request());
 
   try {
-    // let filter = collectionId ? 'id='+collectionId : '';
-    // const { data } = await Axios.get(`${api.baseUrl + api.hotCollections}?${filter}`, {
-    //   cancelToken: Canceler.token,
-    //   params: {}
-    // });
-    // // // console.log(data);
-    // const data = await Collection.fetch();
     const data = await Collection.getCurrentUserCollections();
     dispatch(actions.getMyCollections.success(data));
   } catch (err) {

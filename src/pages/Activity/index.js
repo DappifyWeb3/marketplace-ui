@@ -1,12 +1,10 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import Footer from 'components/Segment/Footer';
 import { createGlobalStyle } from 'styled-components';
-import { Grid, Button, Paper } from '@mui/material';
+import { Grid  } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import * as selectors from '../../store/selectors';
+import * as selectors from 'store/selectors';
 import { fetchNfts } from 'store/actions/thunks';
-import moment from 'moment';
-import { DappifyContext } from 'react-dappify';
 import ActivityItem from 'components/ActivityItem';
 
 const GlobalStyles = createGlobalStyle`
@@ -45,19 +43,16 @@ const GlobalStyles = createGlobalStyle`
 
 const Activity = ({t}) => {
   const dispatch = useDispatch();
-  const { configuration } = useContext(DappifyContext);
   const nftItems = useSelector(selectors.nftsState);
   const nfts = nftItems?.data ? nftItems.data : [];
 
   useEffect(() => {
-    // console.log("fetch witrh ");
     dispatch(fetchNfts({}));
 }, [dispatch]);
 
 const renderActivity = () => {
   const list = [];
   nfts.forEach((nft, index) => {
-    // console.log(nft);
     list.push(<ActivityItem nft={nft} index={index} />);
   });
   return list;

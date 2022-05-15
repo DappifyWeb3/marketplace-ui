@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Snackbar, Alert, Box } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 import { useSelector } from 'react-redux';
 import * as selectors from 'store/selectors';
 

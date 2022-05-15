@@ -47,10 +47,6 @@ const states = (state = defaultState, action) => {
     case getType(actions.getNfts.request):
       return { ...state, nfts: entityLoadingStarted(state.nfts, action.payload) };
     case getType(actions.getNfts.success):
-      //append existing data with new data
-      // let nftList = state.nfts.data ? [...state.nfts.data, ...action.payload] : action.payload;
-      // // console.log("top kek?");
-      // // console.log(nftList);
       return { ...state, nfts: entityLoadingSucceeded(state.nfts, action.payload) };
     case getType(actions.getNfts.failure):
       return { ...state, nfts: entityLoadingFailed(state.nfts) };
@@ -108,7 +104,6 @@ const states = (state = defaultState, action) => {
       case getType(actions.getNftsFromCollection.request):
         return { ...state, nftsFromCollection: entityLoadingStarted(state.nftsFromCollection, action.payload) };
       case getType(actions.getNftsFromCollection.success):
-        // // // console.log(action.payload);
         return { ...state, nftsFromCollection: entityLoadingSucceeded(state.nftsFromCollection, action.payload) };
       case getType(actions.getNftsFromCollection.failure):
         return { ...state, nftsFromCollection: entityLoadingFailed(state.nftsFromCollection) };
@@ -117,7 +112,6 @@ const states = (state = defaultState, action) => {
         case getType(actions.getNftsFromUser.request):
           return { ...state, nftsFromUser: entityLoadingStarted(state.nftsFromUser, action.payload) };
         case getType(actions.getNftsFromUser.success):
-          // // // console.log(action.payload);
           return { ...state, nftsFromUser: entityLoadingSucceeded(state.nftsFromUser, action.payload) };
         case getType(actions.getNftsFromUser.failure):
           return { ...state, nftsFromUser: entityLoadingFailed(state.nftsFromUser) };

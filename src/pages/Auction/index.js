@@ -43,7 +43,6 @@ const Auction= ({t}) => {
 
   const nftAuctionsState = useSelector(selectors.nftAuctions);
   const nftAuctions = nftAuctionsState.data ? nftAuctionsState.data : [];
-  // // console.log(nftAuctions);
   return (
     <div>
     <GlobalStyles/>

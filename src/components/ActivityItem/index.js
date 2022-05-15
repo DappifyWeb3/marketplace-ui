@@ -1,19 +1,11 @@
-import React, { useEffect, useContext } from 'react';
-import Footer from 'components/Segment/Footer';
-import { createGlobalStyle } from 'styled-components';
-import { Grid, Button, Paper } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import * as selectors from '../../store/selectors';
-import { fetchNfts } from 'store/actions/thunks';
+import React, { useContext } from 'react';
+import { Grid, Paper } from '@mui/material';
 import moment from 'moment';
 import { DappifyContext } from 'react-dappify';
 import ImageFadeIn from "react-image-fade-in";
 
 const ActivityItem = ({nft, index}) => {
-    const dispatch = useDispatch();
-    const { configuration, project } = useContext(DappifyContext);
-    const nftItems = useSelector(selectors.nftsState);
-    const nfts = nftItems?.data ? nftItems.data : [];
+    const { project } = useContext(DappifyContext);
     const network = project.getNetworkContext('marketplace');
     return (
         <Grid item xs={12} className="act_sale onStep fadeIn" key={index}>

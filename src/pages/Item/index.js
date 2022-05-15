@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useContext } from "react";
+import React, { memo, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Footer from 'components/Segment/Footer';
 import * as selectors from 'store/selectors';

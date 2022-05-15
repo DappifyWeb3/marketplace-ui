@@ -4,10 +4,9 @@ import { Typography, Grid, IconButton } from '@mui/material';
 const CopyAddress = function({ user }) {
 
     const addressToClipboard = (e) => {
-        e.preventDefault();
-        const copied = user.wallet;
-        navigator.clipboard.writeText(copied).then(function() {
-        // // console.log('Async: Copying to clipboard was successful!');
+            e.preventDefault();
+            const copied = user.wallet;
+            navigator.clipboard.writeText(copied).then(function() {
         }, function(err) {
         console.error('Async: Could not copy text: ', err);
         });

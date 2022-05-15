@@ -57,9 +57,7 @@ constructor() {
 
   onChange(e) {
     var files = e.target.files;
-    // // // console.log(files);
     var filesArr = Array.prototype.slice.call(files);
-    // // // console.log(filesArr);
     document.getElementById("file_name").style.display = "none";
     this.setState({ files: [...this.state.files, ...filesArr] });
   }

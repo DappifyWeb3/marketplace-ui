@@ -1,17 +1,14 @@
 import { useContext } from 'react';
-// import { useTheme } from "@mui/material/styles";
 import {  Drawer, Box, List, ListItemIcon, ListItemText, Divider, ListItem } from '@mui/material';
 import { DappifyContext } from 'react-dappify';
 import SearchIcon from '@mui/icons-material/Search';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
-import AddBoxIcon from '@mui/icons-material/AddBox';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { navigate } from '@reach/router';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 export default function DrawerMenu({ open=false, onClose }) {
-    // const theme = useTheme();
     const { isAuthenticated, logout } = useContext(DappifyContext);
 
     const handleClose = async () => {
@@ -51,12 +48,6 @@ export default function DrawerMenu({ open=false, onClose }) {
                 </ListItemIcon>
                 <ListItemText primary="Stats" />
             </ListItem>
-            {/*<ListItem button onClick={() => handleGoTo('/options')}>
-                <ListItemIcon>
-                    <AddBoxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Create" />
-    </ListItem>*/}
         </List>
         <Divider />
         {isAuthenticated && (

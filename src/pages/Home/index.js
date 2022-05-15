@@ -11,6 +11,8 @@ import SliderSingleImage from 'components/Segment/SliderSingleImage';
 import SliderCarousel from 'components/Segment/SliderCarousel';
 import News from 'components/Segment/News';
 import { DappifyContext } from 'react-dappify';
+import { Box } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
 
 const CenteredTextSection = (context, t) => (
   <section className='jumbotron no-bg h-vh landing-background' key='introCenter'>
@@ -36,13 +38,13 @@ const SliderSingleImageSection = (context, t) => (
   </section>
 );
 
-const HotCollectionsSection = (context, t) => (
+const HotCollectionsSection = (context, t, theme) => (
   <section className='container no-bottom onStep fadeIn' key='collections'>
     <div className='row'>
       <div className='col-lg-12'>
         <div className='text-center'>
           <h2>{context.label || t('Hot collections')}</h2>
-          <div className="small-border"></div>
+          <div className="small-border" style={{ background: theme.palette.secondary.main }}></div>
         </div>
       </div>
       <div className='col-lg-12'>
@@ -52,13 +54,13 @@ const HotCollectionsSection = (context, t) => (
   </section>
 );
 
-const NewItemsSection = (context, t) => (
+const NewItemsSection = (context, t, theme) => (
   <section className='container no-bottom onStep fadeIn' key='newsItem'>
     <div className='row'>
       <div className='col-lg-12'>
         <div className='text-center'>
           <h2>{context.label || t('New items')}</h2>
-          <div className="small-border"></div>
+          <div className="small-border" style={{ background: theme.palette.secondary.main }}></div>
         </div>
       </div>
       <div className='col-lg-12'>
@@ -68,13 +70,13 @@ const NewItemsSection = (context, t) => (
   </section>
 );
 
-const TopSellersSection = (context, t) => (
+const TopSellersSection = (context, t, theme) => (
   <section className='container no-bottom onStep fadeIn' key='sellers'>
     <div className='row'>
       <div className='col-lg-12'>
         <div className='text-center'>
           <h2>{context.label || t('Top sellers')}</h2>
-          <div className="small-border"></div>
+          <div className="small-border" style={{ background: theme.palette.secondary.main }}></div>
         </div>
       </div>
       <div className='col-lg-12'>
@@ -84,13 +86,13 @@ const TopSellersSection = (context, t) => (
   </section>
 );
 
-const BrowseByCategorySection = (context, t) => (
+const BrowseByCategorySection = (context, t, theme) => (
   <section className='container onStep fadeIn' key='browse'>
     <div className='row'>
       <div className='col-lg-12'>
         <div className='text-center'>
           <h2>{context.label || t('Browse by category')}</h2>
-          <div className="small-border"></div>
+          <div className="small-border" style={{ background: theme.palette.secondary.main }}></div>
         </div>
       </div>
     </div>
@@ -108,13 +110,13 @@ const SliderCarouselSection = (context, t) => (
   </section>
 );
 
-const NewsSection = (context, t) => (
+const NewsSection = (context, t, theme) => (
   <section className='container' key='news'>
     <div className='row'>
       <div className='col-lg-12'>
         <div className='text-center'>
           <h2>{context.label || t('Latest news')}</h2>
-          <div className="small-border"></div>
+          <div className="small-border" style={{ background: theme.palette.secondary.main }}></div>
         </div>
       </div>
     </div>
@@ -125,33 +127,43 @@ const NewsSection = (context, t) => (
 const sectionMapping = {
   static: CenteredTextSection,
   staticLeft: LeftTextAndImageSection,
-  // groupShowcase: SliderMultiImageSection,
-  // individualShowcase: SliderSingleImageSection,
+  sliderShowcase: SliderMultiImageSection,
+  individualShowcase: SliderCarouselSection,
   HotCollections: HotCollectionsSection,
   groupShowcase: NewItemsSection,
   sellers: TopSellersSection,
   categories: BrowseByCategorySection,
   Footer: FooterSection,
-  individualShowcase: SliderCarouselSection,
+  sliderCarousel: SliderCarouselSection,
   News: NewsSection
 };
 
 const Home = ({t}) => {
+  const theme = useTheme();
   const { configuration } = useContext(DappifyContext);
   const renderLayout = () => {
     const layout = [];
     configuration.landingPage.sections.forEach((segment) => {
-      const component = sectionMapping[segment.type](segment.metadata, t)
+      const component = sectionMapping[segment.type](segment.metadata, t, theme)
       layout.push(component);
     });
     return layout;
   }
 
   return (
-    <div className='theme-background'>
+    <Box className='theme-background'>
+        <img alt="" src={configuration.landingPage.background} style={{
+          position: 'absolute',
+          backgroundSize: 'cover',
+          width: '100%',
+          height: 'auto',
+          top: -60,
+          zIndex: -1,
+          backgroundRepeat: 'no-repeat'
+        }}/>
         {renderLayout()}
         <Footer context={configuration} key='footer' t={t}/>
-    </div>
+    </Box>
   )
 };
 export default Home;

@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Link } from '@reach/router';
+import React, { useContext, useState } from 'react';
 import { DappifyContext } from 'react-dappify';
 import { Grid, Typography, Button } from '@mui/material';
 import { navigate } from '@reach/router';
@@ -26,10 +25,9 @@ const Categories= ({ onSelect }) => {
     const displayCategories = () => {
         const items = [];
         configuration?.categories.forEach((category, index) => {
-            const renderClass = `fa ${category.fontAwesomeIcon}`;
             items.push(
                 <Grid item xs={12} sm={6} md={3} key={index}>
-                    <Button id={category.uri} fullWidth variant={selected && category.uri === selected ? 'contained' : 'outlined'} sx={{ borderRadius: 0, py: 4 }} onClick={() => handleSelect(category)}>
+                    <Button id={category.uri} fullWidth variant='contained' sx={{ borderRadius: 0, py: 4 }} onClick={() => handleSelect(category)}>
                         <Grid container direction="column">
                             <Grid item xs={12}>
                                 <span className="material-symbols-outlined" style={{ fontSize: '3em'}}>

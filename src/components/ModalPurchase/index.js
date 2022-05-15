@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CircularProgress, Grid, Dialog, DialogContent, Button, DialogTitle, DialogContentText, Typography } from '@mui/material';
+import { Grid, Dialog, DialogContent, DialogTitle, DialogContentText, Typography } from '@mui/material';
 import { DappifyContext } from 'react-dappify';
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
@@ -8,6 +8,7 @@ import Verification from 'components/Verification';
 
 import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
+import ModalActions from 'components/ModalActions';
 
 const ModalPurchase = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
@@ -51,23 +52,13 @@ const ModalPurchase = ({ isOpen=false, onClose, isBid, nft, t }) => {
                     {isPurchasing && (<ConfirmationWarning t={t} />)}
                     <OperationResult state={nftPurchaseState} t={t} />
                 </Grid>
-                <Grid container spacing={1} sx={{ mt: 3 }}>
-                <Grid item xs={6}>
-                    <Button variant="outlined" onClick={onClose} fullWidth>{t('Cancel')} </Button>
-                </Grid>
-                <Grid item xs={6}>
-                    {!isPurchasing && (
-                        <Button variant="contained" color="primary" onClick={handleAction} fullWidth>
-                        {t('Purchase')} 
-                        </Button>
-                    )}
-                    {isPurchasing && (
-                        <Button true disabled variant="contained" color="primary" onClick={handleAction} fullWidth>
-                            {t('Please wait')} <CircularProgress size={24} sx={{ ml: 2 }} color="inherit" />
-                        </Button> 
-                    )}
-                </Grid>
-            </Grid>
+                <ModalActions  state={nftPurchaseState} 
+                                onClose={onClose} 
+                                handleAction={handleAction} 
+                                t={t} 
+                                confirmLabel="Purchase" 
+                                loading={isPurchasing} 
+                />
         </DialogContent>
     </Dialog>
     );

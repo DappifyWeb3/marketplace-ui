@@ -5,7 +5,6 @@ import { Box } from '@mui/material';
 
 const Logo = () => {
     const { configuration } = useContext(DappifyContext);
-    // // // console.log(configuration);
     return (
         <div className='logo px-0'>
             <div className='navbar-title navbar-item'>

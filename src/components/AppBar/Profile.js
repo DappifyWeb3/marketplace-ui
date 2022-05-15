@@ -83,7 +83,7 @@ export default function Profile({ t }) {
     const renderBalance = () => isRightNetwork && (
       <Grid container direction="row">
         <Grid item>
-            <Avatar sx={{ height: 60, width: 60 }} src={constants.LOGO[network.nativeCurrency.symbol]} />
+            <img className="img_symbol" src={constants.LOGO[network.nativeCurrency.symbol]} alt={network.nativeCurrency.symbol} />
         </Grid>
         <Grid item>
             <Grid container direction="column">

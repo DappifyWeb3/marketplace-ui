@@ -9,14 +9,13 @@ import { Grid, Typography, Paper, Button, Divider } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { navigate } from '@reach/router';
 import { formatAddress } from 'react-dappify/utils/format';
-import Marketplace from 'react-dappify/model/Marketplace';
 import { DappifyContext } from "react-dappify";
 import moment from 'moment';
+import constants from 'constant';
 
 const Author = ({ address, t }) => {
   const theme = useTheme();
-  const {project} = useContext(DappifyContext);
-  const network = project?.getNetworkContext('marketplace');
+  const {isAuthenticated} = useContext(DappifyContext);
   const dispatch = useDispatch();
   const authorState = useSelector(selectors.authorState);
   const author = authorState.data || {};
@@ -27,36 +26,24 @@ const Author = ({ address, t }) => {
   const currentUserState = useSelector(selectors.currentUserState);
   const currentUser = currentUserState.data || {};
 
-  const loadBalances = async() => {
-    try {
-      if(!address) return;
-      const balance = await Marketplace.getBalance(address);
-      setAvailableBalance(balance);
-    } catch (e) {
-      console.error(e);
-    }
-  }
   useEffect(() => {
       dispatch(fetchUser(address));
-      loadBalances();
   }, [address, dispatch]);
 
   const [filter, setFilter] = useState('owned');
-  const [availableBalance, setAvailableBalance] = useState(0);
   const onFilterSelect = (e) => {
     setFilter(e.target.id);
   }
+  const isSelf = isAuthenticated && currentUser.wallet === author.wallet;
 
-  const withdrawBalance = async() => {
-    await Marketplace.withdrawBalance();
-    await loadBalances();
+  const getBanner = () => {
+    if (currentUser && currentUser.banner) return currentUser.banner;
+    return constants.PLACEHOLDER.PROFILE;
   };
-
-  const isSelf = currentUser.wallet === author.wallet;
 
   return (
   <div>
-  <section className='jumbotron breadcumb no-bg' style={{backgroundImage: `url(${author.banner})`, position: 'absolute'}}>
+  <section className='jumbotron breadcumb no-bg' style={{backgroundImage: `url(${getBanner()})`, position: 'absolute'}}>
   <div className='mainbreadcumb'></div>
   </section>
   <section className="container">
@@ -76,9 +63,6 @@ const Author = ({ address, t }) => {
                   {author.bio}
                 </Typography>
               </Grid>
-              { availableBalance > 0 && (<Grid item xs={12} textAlign="center">
-                <Button variant="contained" color="success" onClick={withdrawBalance}>{`${t('Withdraw')} ${availableBalance} ${network.nativeCurrency.symbol}`}</Button>
-              </Grid>)}
               <Grid item xs={12} textAlign="center">
                 <Typography sx={{ fontSize: '1em', fontWeight: 'bold', color: theme.palette.text.primary }}>{author.webite}</Typography>
               </Grid>

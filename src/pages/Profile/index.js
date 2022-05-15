@@ -6,9 +6,10 @@ import * as selectors from 'store/selectors';
 import { DappifyContext } from 'react-dappify';
 import Identicon from 'react-identicons';
 import { Button } from '@mui/material';
+import constants from 'constant';
 
 const Profile = ({t}) => {
-    const { configuration, user } = useContext(DappifyContext);
+    const { user } = useContext(DappifyContext);
     const dispatch = useDispatch();
     const currentUserState = useSelector(selectors.currentUserState);
     const currentUser = currentUserState.data || {};
@@ -65,7 +66,7 @@ const Profile = ({t}) => {
     const getBanner = () => {
         if (bannerPreview) return bannerPreview;
         if (currentUser && currentUser.banner) return currentUser.banner;
-        return configuration.images.profile;
+        return constants.PLACEHOLDER.PROFILE;
     };
 
     const handleChange = (e) => currentUser[e.target.id] = e.target.value;

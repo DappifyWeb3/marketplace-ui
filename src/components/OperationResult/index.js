@@ -7,16 +7,17 @@ const OperationResult = ({state, t}) => {
     const { project } = useContext(DappifyContext);
     const [explorerUrl, setExploreUrl] = useState();
 
-    const prepareExplorerUrl = () => {
-        const network = project.getNetworkForTemplate('marketplace');
-        const networkDetails = constants.NETWORKS[network.chainId];
-        const explorerBase = networkDetails.blockExplorerUrls[0];
-        setExploreUrl(`${explorerBase}/tx/${state.data}`);
-    }
-
     useEffect(() => {
+
+        const prepareExplorerUrl = () => {
+            const network = project.getNetworkForTemplate('marketplace');
+            const networkDetails = constants.NETWORKS[network.chainId];
+            const explorerBase = networkDetails.blockExplorerUrls[0];
+            setExploreUrl(`${explorerBase}/tx/${state.data}`);
+        }
+
         prepareExplorerUrl();
-    }, [state]);
+    }, [project, state]);
 
     const isTxCompleted = state.loadFailed || state.data;
     const errorState = state.loadFailed && (

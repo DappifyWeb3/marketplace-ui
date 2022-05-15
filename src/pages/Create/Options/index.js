@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import { navigate } from '@reach/router';
 import Footer from 'components/Segment/Footer';
 import { createGlobalStyle } from 'styled-components';

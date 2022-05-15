@@ -19,7 +19,6 @@ import { useDispatch } from "react-redux";
 import { DappifyContext } from 'react-dappify';
 import { Chip } from '@mui/material';
 import Toast from 'components/Toast';
-import { initReactI18next, useTranslation } from "react-i18next";
 
 function ElevationScroll(props) {
   const theme = useTheme();

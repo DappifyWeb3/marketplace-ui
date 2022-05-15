@@ -7,13 +7,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
 import { fetchNftShowcase } from "store/actions/thunks";
 import { navigate } from "@reach/router";
-const api = {};
 const SliderCarouselSingleRedux = () => {
 
   const dispatch = useDispatch();
   const nftsState = useSelector(selectors.nftShowcaseState);
   const nfts = nftsState.data ? nftsState.data : [];
-  
+
   useEffect(() => {
       dispatch(fetchNftShowcase());
   }, [dispatch]);

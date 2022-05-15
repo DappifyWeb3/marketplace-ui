@@ -34,7 +34,6 @@ export const commentsState = (state) => state.blogs.comments;
 
 //loader
 export const isLoading = (state) => {
-    // // // console.log(state);
     return  state.collections.save.loading ||
             state.NFT.save.loading ||
             state.users.save.loading;

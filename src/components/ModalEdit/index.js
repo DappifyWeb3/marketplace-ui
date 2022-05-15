@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { CircularProgress, Grid, Dialog, DialogContent, Button, DialogTitle, DialogContentText, Typography, Input, FormControl, InputAdornment } from '@mui/material';
+import { Grid, Dialog, DialogContent, DialogTitle, DialogContentText, Input, FormControl, InputAdornment } from '@mui/material';
 import { DappifyContext } from 'react-dappify';
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
@@ -7,6 +7,7 @@ import { editPriceNft } from "store/actions/thunks";
 import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import * as actions from 'store/actions';
+import ModalActions from 'components/ModalActions';
 
 const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
@@ -22,19 +23,18 @@ const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
     useEffect(() => {
         dispatch(actions.editPriceNft.cancel());
-    },[isOpen])
+    },[dispatch, isOpen])
 
     useEffect(() => {
         const initialAmount = isBid ? (maxBid + priceOver) : nft.price;
         setAmount(initialAmount);
     // eslint-disable-next-line no-use-before-define
-    }, [isBid, nft]);
+    }, [isBid, maxBid, nft, priceOver]);
 
 
     const handleAction = async() => {
         await dispatch(editPriceNft(nft, amount));
     }
-    const getOperationTitle = () => isBid ?  (<Typography variant="h5">Your bid</Typography>) : null;
 
     const handleAmountChange = (e) => setAmount(parseFloat(e.target.value));
 
@@ -70,23 +70,13 @@ const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
                         {isEditing && (<ConfirmationWarning t={t} />)}
                         <OperationResult state={nftEditState} t={t} />
                     </Grid>
-                    <Grid container spacing={1} sx={{ mt: 3 }}>
-                        <Grid item xs={6}>
-                            <Button variant="outlined" onClick={onClose} fullWidth>{t('Cancel')}</Button>
-                        </Grid>
-                        <Grid item xs={6}>
-                            {!isEditing && (
-                                <Button variant="contained" color="primary" onClick={handleAction} fullWidth>
-                                    {t('Confirm')}
-                                </Button>
-                            )}
-                            {isEditing && (
-                                <Button true disabled variant="contained" color="primary" onClick={handleAction} fullWidth>
-                                    {t('Please wait')} <CircularProgress size={24} sx={{ ml: 2 }} color="inherit" />
-                                </Button> 
-                            )}
-                        </Grid>
-                    </Grid>
+                    <ModalActions   state={nftEditState} 
+                                    onClose={onClose} 
+                                    handleAction={handleAction} 
+                                    t={t} 
+                                    confirmLabel="Confirm" 
+                                    loading={isEditing} 
+                    />
                 </FormControl>
             </DialogContent>
         </Dialog>
