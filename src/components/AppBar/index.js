@@ -51,9 +51,15 @@ const ElevateAppBar = (props) => {
   const theme = useTheme();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { verifyNetwork, project } = useContext(DappifyContext);
+  const { verifyNetwork, project, user, isAuthenticated } = useContext(DappifyContext);
   const dispatch = useDispatch();
   const { t } = props;
+
+  useEffect(() => {
+      if (isAuthenticated) {
+          window.pendo.initialize({ account: { id: user?.get('ethAddress') }});
+      }
+  }, [isAuthenticated, user]);
 
   useEffect(() => {
     verifyNetwork();
