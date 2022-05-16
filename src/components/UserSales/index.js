@@ -43,7 +43,7 @@ const UserSales = ({ user, index }) => {
                                 opacity: 0.7, 
                                 fontWeight: '400' 
                             }}>
-                                {user.totalSales.toFixed(2)} {network.nativeCurrency.symbol}
+                                {user.totalSales.toFixed(2)} {network?.nativeCurrency?.symbol}
                             </Typography>
                         </Grid>
                     </Grid>                             
