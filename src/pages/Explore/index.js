@@ -8,6 +8,8 @@ import { fetchNfts } from 'store/actions/thunks';
 import { Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useLocation } from '@reach/router';
 import { parse } from "query-string";
+import Property from 'react-dappify/model/Property';
+import { toUri } from 'react-dappify/utils/format';
 
 const Explore = ({t}) => {
   const location = useLocation();
@@ -15,17 +17,19 @@ const Explore = ({t}) => {
   const dispatch = useDispatch();
   const nftItems = useSelector(selectors.nftsState);
   const nfts = nftItems?.data ? nftItems.data : [];
-  const [category, setCategory] = useState(parse(location.search).category);
+  const [categories] = useState(Property.findAllWithType({type:'category'}));
+  const [category, setCategory] = useState(categories.find((cat) => toUri(cat.key) === parse(location.search).category)?.key);
 
   useEffect(() => {
+    console.log(category);
       const status = 'OfferingPlaced';
-      dispatch(fetchNfts({category, status}));
+      dispatch(fetchNfts({ category, status}));
   }, [dispatch, configuration, category]);
 
   const renderCategories = () => {
     const list = [];
-    configuration?.categories?.forEach((cat) => {
-      list.push(<MenuItem value={cat.uri} key={cat.uri}>{t(cat.label)}</MenuItem>)
+    categories?.forEach((cat) => {
+      list.push(<MenuItem value={cat.key} key={cat.key}>{t(cat.key)}</MenuItem>)
     });
     return list;
   };
@@ -45,7 +49,7 @@ const Explore = ({t}) => {
             }}
           >
             <MenuItem value="">
-              <em>{t('None')}</em>
+              <em>{t('All')}</em>
             </MenuItem>
             {renderCategories()}
           </Select>

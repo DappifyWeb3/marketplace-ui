@@ -1,15 +1,29 @@
-# Basic Sample Hardhat Project
+## NFT Marketplace Template
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This template is designed to be used within the [Dappify](http://dappify.com "Dappify") ecosystem.
 
-Try running some of the following tasks:
+#### Configurable Properties
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+1. Landing Page Background Image
 ```
+type: layout,
+key: backgroundUrl,
+value: <image_url>
+```
+
+2. NFT Categories. Must configure one property per category as follows
+```
+type: category,
+key: <category_name>,
+value: <category_image_url>
+```
+
+3. NFT Creator link. It enables the header navbar button "Create" and links to the specified URL to allow users to mint.
+```
+type: action,
+key: create,
+value: <minter_app_url>
+```
+
+#### Author
+Dappify

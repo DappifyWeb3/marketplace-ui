@@ -25,7 +25,7 @@ export default function SearchBar({t}) {
     });
 
     const options = fullTextSearchResult.map((option) => {
-      const className = option.source.className === 'NFTOffer' ? 'NFTs' : 
+      const className = option.source.className === 'Transaction' ? 'NFTs' : 
                         option.source.className === 'NFTCollection' ? 'Collections' : 'Accounts';
       const label = className === 'NFTs' ? option.metadata.name : 
                     className === 'Collections' ? option.name : 

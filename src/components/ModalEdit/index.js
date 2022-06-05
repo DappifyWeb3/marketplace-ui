@@ -8,13 +8,14 @@ import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import * as actions from 'store/actions';
 import ModalActions from 'components/ModalActions';
+import constants from 'react-dappify/constants';
 
 const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
     const nftEditState = useSelector(selectors.nftEditState);
     const isEditing = nftEditState.loading;
-    const {configuration, project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { configuration } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
     const priceOver = configuration?.feature?.bids?.priceOver;
     const maxBid = nft?.maxBid || 0;
     const [amount, setAmount] = useState();

@@ -9,6 +9,7 @@ import Verification from 'components/Verification';
 import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import ModalActions from 'components/ModalActions';
+import constants from 'react-dappify/constants';
 
 const ModalPurchase = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
@@ -16,8 +17,8 @@ const ModalPurchase = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const currentUser = currentUserState.data || {};
     const nftPurchaseState = useSelector(selectors.nftPurchaseState);
     const isPurchasing = nftPurchaseState.loading;
-    const {project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { configuration } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
 
     const getToken = () => `${nft?.metadata?.name} #${nft.tokenId}`;
 

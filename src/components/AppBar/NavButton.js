@@ -8,6 +8,8 @@ export default function NavButton({ link, label }) {
     const theme = useTheme();
     // const { configuration } = useContext(DappifyContext);
 
+    const isLocalLink = !link.startsWith('http');
+
     return (
         <Button
             key={link}
@@ -32,7 +34,8 @@ export default function NavButton({ link, label }) {
                 }
             }}
         >
-            <Link to={`/${link}`}>{label}</Link>
+            {isLocalLink && (<Link to={`/${link}`}>{label}</Link>)}
+            {!isLocalLink && (<a href={link} target="_blank" rel="noreferrer">{label}</a>)}
         </Button>
     );
 }

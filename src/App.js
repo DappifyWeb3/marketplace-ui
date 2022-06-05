@@ -1,23 +1,24 @@
 import { useEffect, useContext } from 'react';
 import { DappifyContext } from 'react-dappify';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import i18n from "i18next";
 import Routes from 'Routes';
-
+import Template from 'react-dappify/model/Template';
 
 const App = () => {
   const { configuration } = useContext(DappifyContext);
+  const theme = createTheme(configuration?.theme);
 
   useEffect(() => {
-    if (configuration) {
+    const template = Template.current();
+
+    if (template) {
       i18n
         .use(initReactI18next)
-        .init(configuration.translation);
+        .init(template?.translation);
     }
   },[configuration]);
-
-  const theme = createTheme(configuration.theme);
 
   return (
     <ThemeProvider theme={theme}>
