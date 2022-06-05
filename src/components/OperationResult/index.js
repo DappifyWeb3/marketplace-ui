@@ -1,17 +1,16 @@
 import { useState, useEffect, useContext } from 'react';
-import { Alert, Grid, Typography } from '@mui/material';
+import { Alert, Grid, Typography, Button } from '@mui/material';
 import { DappifyContext } from 'react-dappify';
 import constants from 'react-dappify/constants';
 
 const OperationResult = ({state, t}) => {
-    const { project } = useContext(DappifyContext);
+    const { project, configuration } = useContext(DappifyContext);
     const [explorerUrl, setExploreUrl] = useState();
 
     useEffect(() => {
 
         const prepareExplorerUrl = () => {
-            const network = project.getNetworkForTemplate('marketplace');
-            const networkDetails = constants.NETWORKS[network.chainId];
+            const networkDetails = constants.NETWORKS[configuration.chainId];
             const explorerBase = networkDetails.blockExplorerUrls[0];
             setExploreUrl(`${explorerBase}/tx/${state.data}`);
         }
@@ -32,6 +31,7 @@ const OperationResult = ({state, t}) => {
         <Alert severity="success">
             <Typography variant="body">
                 <a href={explorerUrl} target="_blank" rel="noreferrer">{t('Transaction successful')}</a>
+                <Button sx={{ height: 15 }} href={explorerUrl} target="_blank" rel="noreferrer">{t('View in explorer')}</Button>
             </Typography>
         </Alert>
     );

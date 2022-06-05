@@ -19,6 +19,8 @@ import { useDispatch } from "react-redux";
 import { DappifyContext } from 'react-dappify';
 import { Chip } from '@mui/material';
 import Toast from 'components/Toast';
+import Property from 'react-dappify/model/Property';
+import isEmpty from 'lodash/isEmpty';
 
 function ElevationScroll(props) {
   const theme = useTheme();
@@ -51,20 +53,9 @@ const ElevateAppBar = (props) => {
   const theme = useTheme();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const { verifyNetwork, project, user, isAuthenticated } = useContext(DappifyContext);
+  const { project } = useContext(DappifyContext);
   const dispatch = useDispatch();
   const { t } = props;
-
-  useEffect(() => {
-    if (isAuthenticated) {
-        window.pendo.initialize({ account: { id: user?.get('ethAddress') }});
-        window.heap.identify(user?.get('ethAddress'));
-    }
-  }, [isAuthenticated, user]);
-
-  useEffect(() => {
-    verifyNetwork();
-  },[verifyNetwork]);
 
   useEffect(() => {
     dispatch(fetchTokenPrice());
@@ -79,6 +70,9 @@ const ElevateAppBar = (props) => {
   };
 
   const menuId = 'primary-search-account-menu';
+
+  const createLinkProperty = Property.find({ type: 'action', 'key': 'create' });
+  const createLink = !isEmpty(createLinkProperty) && (<NavButton link={createLinkProperty.value} label={t('Create')} />);
 
   return (
     <Fragment>
@@ -98,6 +92,7 @@ const ElevateAppBar = (props) => {
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <NavButton link="explore" label={t('Explore')} />
               <NavButton link="activity" label={t('Stats')} />
+              { createLink }
               {/* <Notifications /> */}
               {/* <NavButton link="options" label="Create" /> */}
               <Profile t={t} />

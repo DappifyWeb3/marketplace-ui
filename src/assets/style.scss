@@ -3044,6 +3044,8 @@ i.font60 {
 }
 .nft{
   width: 100%;
+  max-height: 470px;
+  overflow: hidden;
     .slick-prev{
         left: -12px;
         background: var(--palette-background);

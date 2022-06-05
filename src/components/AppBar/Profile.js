@@ -29,8 +29,8 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 export default function Profile({ t }) {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const { nativeBalance, logout, isAuthenticated, isRightNetwork, verifyNetwork, project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { nativeBalance, logout, isAuthenticated, isRightNetwork, switchToChain, configuration, getProviderInstance } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
     const currentUserState = useSelector(selectors.currentUserState);
     const currentUser = currentUserState.data || {};
 
@@ -60,6 +60,11 @@ export default function Profile({ t }) {
         navigate('/');
     }
 
+    const goToNetwork = async () => {
+      const currentProvider = await getProviderInstance();
+      await switchToChain(configuration, currentProvider);
+    }
+
     const renderNetwork = () => {
       const name = network?.chainName;
       const color = isRightNetwork ? 'success' : 'warning';
@@ -68,8 +73,8 @@ export default function Profile({ t }) {
       return (
         <Grid container direction="row" justifyContent="center" spacing={2}>
           <Grid item xs={12} sx={{ mt: 2 }}>
-            <Chip onClick={verifyNetwork}
-                  onDelete={verifyNetwork} 
+            <Chip onClick={goToNetwork}
+                  onDelete={goToNetwork} 
                   variant="contained" 
                   color={color} 
                   label={`${prefix} ${name}`} 
@@ -80,7 +85,7 @@ export default function Profile({ t }) {
       );
     }
 
-    const renderBalance = () => isRightNetwork && (
+    const renderBalance = () => (
       <Grid container direction="row">
         <Grid item>
             <img className="img_symbol" src={constants.LOGO[network.nativeCurrency.symbol]} alt={network.nativeCurrency.symbol} />

@@ -12,11 +12,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import EditIcon from '@mui/icons-material/Edit';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 import { fetchCurrentUser, fetchNftsBreakdown, fetchUserRanking, fetchHotAuctions, fetchNftShowcase } from 'store/actions/thunks';
+import constants from 'react-dappify/constants';
 
 //react functional component
 const Details = ({ nft, t }) => {
-    const { project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { configuration } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
     const dispatch = useDispatch();
     const [isOpenSale, setOpenSale] = useState();
     const [isOpenWithdraw, setOpenWithdraw] = useState();

@@ -8,16 +8,20 @@ import ConfirmationWarning from 'components/ConfirmationWarning';
 import OperationResult from 'components/OperationResult';
 import * as actions from 'store/actions';
 import ModalActions from 'components/ModalActions';
+import constants from 'react-dappify/constants';
+import Property from 'react-dappify/model/Property';
+import isEmpty from 'lodash/isEmpty';
 
 const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState();
     const nftSellState = useSelector(selectors.nftSellState);
     const isSelling = nftSellState.loading;
-    const {configuration, project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { configuration } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
     const priceOver = configuration?.feature?.bids?.priceOver;
     const maxBid = nft?.maxBid || 0;
+    const [categories] = useState(Property.findAllWithType({type:'category'}));
 
     const [amount, setAmount] = useState();
 
@@ -42,8 +46,6 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const handleSelectCategory = (e) => {
         setSelectedCategory(e.target.value);
     }
-
-    const canConfirm = amount === 0 || !selectedCategory;
 
     return (
 
@@ -92,7 +94,7 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sx={{ mt: 2 }}>
+                    {!isEmpty(categories) && (<Grid item xs={12} sx={{ mt: 2 }}>
                         <FormControl fullWidth>
                             <InputLabel id="demo-multiple-name-label">Select a category</InputLabel>
                             <Select
@@ -102,17 +104,17 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
                             onChange={handleSelectCategory}
                             input={<OutlinedInput label={t('Select a category')} />}
                             >
-                            {configuration.categories.map((category) => (
+                            {categories.map((category) => (
                                 <MenuItem
-                                key={category.uri}
-                                value={category}
+                                key={category.key}
+                                value={category.key}
                                 >
-                                {category.label}
+                                {category.key}
                                 </MenuItem>
                             ))}
                             </Select>
                         </FormControl>
-                    </Grid>
+                    </Grid> )}
                     {isSelling && (<ConfirmationWarning t={t} />)}
                     <OperationResult state={nftSellState} t={t} />
                 </Grid>

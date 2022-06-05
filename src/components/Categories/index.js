@@ -1,41 +1,41 @@
-import React, { useContext, useState } from 'react';
-import { DappifyContext } from 'react-dappify';
-import { Grid, Typography, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Grid, Typography, Button, Box } from '@mui/material';
 import { navigate } from '@reach/router';
+import Property from 'react-dappify/model/Property';
+import { toUri } from 'react-dappify/utils/format';
 
 const Categories= ({ onSelect }) => {
-    const { configuration } = useContext(DappifyContext);
-    const [selected, setSelected] = useState();
-// https://fonts.google.com/icons?icon.style=Outlined
+    const [categories] = useState(Property.findAllWithType({type:'category'}));
 
     const handleSelect = (cat) =>{
-        if (cat.uri === selected) {
-            setSelected();
-            if (onSelect)
-                onSelect(); 
-        } else {
-            setSelected(cat.uri);
-            if (onSelect)
-                onSelect(cat);
-            else 
-                navigate(`/explore?category=${cat.uri}`);
-        }
+        navigate(`/explore?category=${toUri(cat.key)}`);
     };
 
     const displayCategories = () => {
         const items = [];
-        configuration?.categories.forEach((category, index) => {
+        categories.forEach((category, index) => {
             items.push(
                 <Grid item xs={12} sm={6} md={3} key={index}>
-                    <Button id={category.uri} fullWidth variant='contained' sx={{ borderRadius: 0, py: 4 }} onClick={() => handleSelect(category)}>
-                        <Grid container direction="column">
+                    <Button id={category.key} 
+                            fullWidth variant='contained' 
+                            sx={{ 
+                                borderRadius: 0, 
+                                py: 4
+                            }} 
+                            onClick={() => handleSelect(category)}>
+                        <Box sx={{
+                            background: `url(${category.value})`,
+                            backgroundSize: 'cover',
+                            backgroundRepear: 'no-repeat',
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            zIndex: 0,
+                            opacity: 0.8
+                        }}/>
+                        <Grid container direction="column" sx={{ zIndex: 1 }}>
                             <Grid item xs={12}>
-                                <span className="material-symbols-outlined" style={{ fontSize: '3em'}}>
-                                    {category.icon || 'arrow_forward'}
-                                </span>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography>{category.label || 'Icon Name'}</Typography>
+                                <Typography variant="h4">{category.key || 'Icon Name'}</Typography>
                             </Grid>
                         </Grid>
                     </Button>
@@ -47,7 +47,7 @@ const Categories= ({ onSelect }) => {
 
     return (
         <Grid container spacing={1} justifyContent="center">
-           {configuration?.categories && displayCategories()}
+           {categories && displayCategories()}
         </Grid>
     );
 };

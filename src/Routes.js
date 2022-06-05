@@ -56,7 +56,7 @@ const Routes = () => {
                 <CreateOption exact path="/options" />
                 <Wallet exact path="/wallet" t={t} />
                 <Author exact path='/profile/:address' t={t} />
-                <GuardedRoute path='/profile/:address/manage' component={Profile} t={t} />
+  <GuardedRoute path='/profile/:address/manage' component={Profile} t={t} />
             </ScrollTop>
         </Router>
       <ScrollToTopBtn /></>
