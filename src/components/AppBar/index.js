@@ -16,10 +16,9 @@ import Drawer from 'components/AppBar/Drawer';
 import LoadingBar from './LoadingBar';
 import { fetchTokenPrice } from "store/actions/thunks/project";
 import { useDispatch } from "react-redux";
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, Property } from 'react-dappify';
 import { Chip } from '@mui/material';
 import Toast from 'components/Toast';
-import Property from 'react-dappify/model/Property';
 import isEmpty from 'lodash/isEmpty';
 
 function ElevationScroll(props) {

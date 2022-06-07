@@ -8,10 +8,11 @@ import UserAvatar from "components/UserAvatar";
 import { Grid, Typography, Paper, Button, Divider } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { navigate } from '@reach/router';
-import { formatAddress } from 'react-dappify/utils/format';
-import { DappifyContext } from "react-dappify";
+import { DappifyContext, utils } from "react-dappify";
 import moment from 'moment';
 import constants from 'constant';
+
+const { formatAddress } = utils.format;
 
 const Author = ({ address, t }) => {
   const theme = useTheme();

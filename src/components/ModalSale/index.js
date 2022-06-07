@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { OutlinedInput, MenuItem, Grid, Dialog, DialogContent, Select, DialogTitle, DialogContentText, Typography, Input, FormControl, InputLabel, InputAdornment } from '@mui/material';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants, Property } from 'react-dappify';
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
 import { sellNft } from "store/actions/thunks";
@@ -8,8 +8,6 @@ import ConfirmationWarning from 'components/ConfirmationWarning';
 import OperationResult from 'components/OperationResult';
 import * as actions from 'store/actions';
 import ModalActions from 'components/ModalActions';
-import constants from 'react-dappify/constants';
-import Property from 'react-dappify/model/Property';
 import isEmpty from 'lodash/isEmpty';
 
 const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {

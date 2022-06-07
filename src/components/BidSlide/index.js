@@ -1,13 +1,12 @@
 import React, { useState, useContext } from "react";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { DappifyContext } from "react-dappify";
+import { DappifyContext, constants } from "react-dappify";
 import { Button } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from '@reach/router';
 import ModalPurchase from 'components/ModalPurchase';
 import { useTranslation } from 'react-i18next';
-import constants from 'react-dappify/constants';
 import UserProfileMini from "components/UserProfileMini";
 
 const BidSlide = ({nft, usdPrice}) => {

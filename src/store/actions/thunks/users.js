@@ -1,5 +1,5 @@
 import * as actions from 'store/actions';
-import UserProfile from 'react-dappify/model/UserProfile';
+import {UserProfile} from 'react-dappify';
 import { fetchNftsFromUser } from 'store/actions/thunks';
 
 export const fetchCurrentUser = () => async (dispatch) => {

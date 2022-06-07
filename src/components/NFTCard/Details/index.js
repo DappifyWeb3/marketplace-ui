@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants } from 'react-dappify';
 import {  Grid, Typography, Tooltip, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import * as selectors from 'store/selectors';
@@ -12,7 +12,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import EditIcon from '@mui/icons-material/Edit';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 import { fetchCurrentUser, fetchNftsBreakdown, fetchUserRanking, fetchHotAuctions, fetchNftShowcase } from 'store/actions/thunks';
-import constants from 'react-dappify/constants';
 
 //react functional component
 const Details = ({ nft, t }) => {

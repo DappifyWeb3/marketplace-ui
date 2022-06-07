@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Grid, Dialog, DialogContent, DialogTitle, DialogContentText, Typography } from '@mui/material';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants } from 'react-dappify';
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
 import { purchaseNft } from "store/actions/thunks";
@@ -9,7 +9,6 @@ import Verification from 'components/Verification';
 import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import ModalActions from 'components/ModalActions';
-import constants from 'react-dappify/constants';
 
 const ModalPurchase = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();

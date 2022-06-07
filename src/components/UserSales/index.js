@@ -1,11 +1,11 @@
 import React, { memo, useContext } from 'react';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants, utils } from 'react-dappify';
 import { Grid, Typography } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from '@reach/router';
 import UserAvatar from 'components/UserAvatar';
-import { cropText, formatAddress } from 'react-dappify/utils/format';
-import constants from 'react-dappify/constants';
+
+const { cropText, formatAddress } = utils.format;
 
 //react functional component
 const UserSales = ({ user, index }) => {

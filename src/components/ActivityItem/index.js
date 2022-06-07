@@ -3,7 +3,7 @@ import { Grid, Paper, Button } from '@mui/material';
 import moment from 'moment';
 import { DappifyContext } from 'react-dappify';
 import ImageFadeIn from "react-image-fade-in";
-import constants from 'react-dappify/constants';
+import { constants } from 'react-dappify';
 import isEmpty from 'lodash/isEmpty';
 
 const ActivityItem = ({nft, index}) => {

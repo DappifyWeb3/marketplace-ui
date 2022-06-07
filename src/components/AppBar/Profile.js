@@ -12,7 +12,7 @@ import Logout from '@mui/icons-material/Logout';
 import { useContext, useEffect } from 'react';
 import { useTheme } from "@mui/material/styles";
 import { Avatar, IconButton } from '@mui/material';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, utils } from 'react-dappify';
 import { fetchCurrentUser } from 'store/actions/thunks';
 import * as selectors from 'store/selectors';
 import { useDispatch, useSelector } from "react-redux";
@@ -20,11 +20,12 @@ import Identicon from 'react-identicons';
 import { navigate } from "@reach/router";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import CopyAddress from 'components/CopyAddress';
-import { cropText } from 'react-dappify/utils/format';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import constants from 'react-dappify/constants';
+import { constants } from 'react-dappify';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+
+const { cropText } = utils.format;
 
 export default function Profile({ t }) {
     const dispatch = useDispatch();

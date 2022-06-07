@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from 'react';
 import { Grid, Paper } from '@mui/material';
 import Preview from 'components/NFTCard/Preview';
 import Details from 'components/NFTCard/Details';
-import Metadata from 'react-dappify/model/Metadata';
+import {Metadata} from 'react-dappify';
 
 //react functional component
 const NFTCard = ({ nft, t }) => {

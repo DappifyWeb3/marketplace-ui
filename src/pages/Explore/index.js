@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import NTFGridContainer from 'components/NTFGridContainer';
 import Footer from 'components/Segment/Footer';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, Property, utils } from 'react-dappify';
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from '../../store/selectors';
 import { fetchNfts } from 'store/actions/thunks';
 import { Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useLocation } from '@reach/router';
 import { parse } from "query-string";
-import Property from 'react-dappify/model/Property';
-import { toUri } from 'react-dappify/utils/format';
+
+const { toUri } = utils.format;
 
 const Explore = ({t}) => {
   const location = useLocation();

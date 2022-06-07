@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button, Box } from '@mui/material';
 import { navigate } from '@reach/router';
-import Property from 'react-dappify/model/Property';
-import { toUri } from 'react-dappify/utils/format';
+import { Property, utils } from 'react-dappify';
+
+const { toUri } = utils.format;
 
 const Categories= ({ onSelect }) => {
     const [categories] = useState(Property.findAllWithType({type:'category'}));

@@ -10,10 +10,9 @@ import SliderMultiImage from 'components/Segment/SliderMultiImage';
 import SliderSingleImage from 'components/Segment/SliderSingleImage';
 import SliderCarousel from 'components/Segment/SliderCarousel';
 import News from 'components/Segment/News';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, Property } from 'react-dappify';
 import { Box } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
-import Property from 'react-dappify/model/Property';
 
 const CenteredTextSection = (context, t) => (
   <section className='jumbotron no-bg h-vh landing-background' key='introCenter'>
