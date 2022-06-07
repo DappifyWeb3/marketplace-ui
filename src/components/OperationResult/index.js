@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Alert, Grid, Typography, Button } from '@mui/material';
-import { DappifyContext } from 'react-dappify';
-import constants from 'react-dappify/constants';
+import { DappifyContext, constants } from 'react-dappify';
 
 const OperationResult = ({state, t}) => {
     const { project, configuration } = useContext(DappifyContext);

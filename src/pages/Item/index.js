@@ -4,12 +4,11 @@ import Footer from 'components/Segment/Footer';
 import * as selectors from 'store/selectors';
 import { fetchNftDetail } from "store/actions/thunks";
 import { Grid, Button, Chip } from '@mui/material';
-import { DappifyContext } from "react-dappify";
+import { DappifyContext, constants } from "react-dappify";
 import { useTheme } from "@mui/material/styles";
 import ImageFadeIn from "react-image-fade-in";
 import ActivityItem from "components/ActivityItem";
 import ModalPurchase from "components/ModalPurchase";
-import constants from 'react-dappify/constants';
 import UserProfileMini from "components/UserProfileMini";
 
 const ItemDetail = ({ contractAddress, tokenId, t }) => {

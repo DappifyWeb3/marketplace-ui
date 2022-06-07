@@ -2,16 +2,12 @@ import React, { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from 'components/Segment/Footer';
 import { createGlobalStyle } from 'styled-components';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants, Status, NFT as Nft, Collection } from 'react-dappify';
 import {Tooltip } from '@mui/material';
-import Status from 'react-dappify/model/Status';
 import NFTCard from 'components/NFTCard';
-import Nft from 'react-dappify/model/NFT';
 import * as selectors from 'store/selectors';
 import { fetchMyCollections, saveNft } from "store/actions/thunks";
 import CollectionDialog from 'pages/Create/Collection';
-import Collection from "react-dappify/model/Collection";
-import constants from 'react-dappify/constants';
 
 const GlobalStyles = createGlobalStyle`
   header#myHeader.navbar.sticky.white {

@@ -1,5 +1,5 @@
 import * as actions from '../../actions';
-import Nft from 'react-dappify/model/NFT';
+import { NFT } from 'react-dappify';
 import { getErrorMessage } from 'store/utils';
 
 export const fetchNfts = ({category=null, status=null}) => async (dispatch, getState) => {
@@ -7,7 +7,7 @@ export const fetchNfts = ({category=null, status=null}) => async (dispatch, getS
   dispatch(actions.getNfts.request());
 
   try {
-    const nfts = await Nft.getWithFilters({category, status});
+    const nfts = await NFT.getWithFilters({category, status});
     dispatch(actions.getNfts.success(nfts));
   } catch (err) {
     dispatch(actions.getNfts.failure(err.message));
@@ -37,7 +37,7 @@ export const saveNft = (nft, collection, imageFile, animationFile) => async(disp
 export const fetchNftsBreakdown = (Provider, authorId, isMusic = false) => async (dispatch, getState) => {
   dispatch(actions.getNftBreakdown.request());
   try {
-    const nfts = await Nft.getNewestDrops();
+    const nfts = await NFT.getNewestDrops();
     dispatch(actions.getNftBreakdown.success(nfts));
   } catch (err) {
     dispatch(actions.getNftBreakdown.failure(err.message));
@@ -47,7 +47,7 @@ export const fetchNftsBreakdown = (Provider, authorId, isMusic = false) => async
 export const fullTextSearch = (text) => async (dispatch, getState) => {
   dispatch(actions.fullTextSearch.request());
   try {
-    const items = await Nft.fullTextSearch(text);
+    const items = await NFT.fullTextSearch(text);
     dispatch(actions.fullTextSearch.success(items));
   } catch (err) {
     dispatch(actions.fullTextSearch.failure(err.message));
@@ -57,7 +57,7 @@ export const fullTextSearch = (text) => async (dispatch, getState) => {
 export const fetchNftLikes = (user) => async (dispatch, getState) => {
   dispatch(actions.getNftLikes.request());
   try {
-    const likes = await Nft.getUserLikes(user);
+    const likes = await NFT.getUserLikes(user);
     const response = { user, likes };
     dispatch(actions.getNftLikes.success(response));
   } catch (err) {
@@ -68,7 +68,7 @@ export const fetchNftLikes = (user) => async (dispatch, getState) => {
 export const fetchNftShowcase = () => async (dispatch) => {
   dispatch(actions.getNftShowcase.request());
   try {
-    const nfts = await Nft.getHotAuctions();
+    const nfts = await NFT.getHotAuctions();
     dispatch(actions.getNftShowcase.success(nfts));
   } catch (err) {
     dispatch(actions.getNftShowcase.failure(err.message));
@@ -78,7 +78,7 @@ export const fetchNftShowcase = () => async (dispatch) => {
 export const fetchNftDetail = (contractAddress, tokenId) => async (dispatch) => {
   dispatch(actions.getNftDetail.request());
   try {
-    const nft = await Nft.getById(contractAddress, tokenId);
+    const nft = await NFT.getById(contractAddress, tokenId);
     dispatch(actions.getNftDetail.success(nft));
   } catch (err) {
     dispatch(actions.getNftDetail.failure(err.message));
@@ -88,7 +88,7 @@ export const fetchNftDetail = (contractAddress, tokenId) => async (dispatch) => 
 export const fetchNftsFromCollection = (collection) => async (dispatch) => {
   dispatch(actions.getNftsFromCollection.request());
   try {
-    const nfts = await Nft.fromCollection(collection);
+    const nfts = await NFT.fromCollection(collection);
     dispatch(actions.getNftsFromCollection.success(nfts));
   } catch (err) {
     dispatch(actions.getNftsFromCollection.failure(err.message));
@@ -98,7 +98,7 @@ export const fetchNftsFromCollection = (collection) => async (dispatch) => {
 export const fetchHotAuctions = () => async (dispatch) => {
   dispatch(actions.getNftAuctions.request());
   try {
-    const bids = await Nft.getHotAuctions();
+    const bids = await NFT.getHotAuctions();
     dispatch(actions.getNftAuctions.success(bids));
   } catch (err) {
     dispatch(actions.getNftAuctions.failure(err.message));
@@ -109,7 +109,7 @@ export const fetchHotAuctions = () => async (dispatch) => {
 export const fetchNftsFromUser = (user) => async (dispatch) => {
   dispatch(actions.getNftsFromUser.request());
   try {
-    const nfts = await Nft.getFromUser(user);
+    const nfts = await NFT.getFromUser(user);
     dispatch(actions.getNftsFromUser.success(nfts));
   } catch (err) {
     dispatch(actions.getNftsFromUser.failure(err.message));

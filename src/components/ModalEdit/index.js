@@ -8,7 +8,7 @@ import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import * as actions from 'store/actions';
 import ModalActions from 'components/ModalActions';
-import constants from 'react-dappify/constants';
+import { constants } from 'react-dappify';
 
 const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();

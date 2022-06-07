@@ -4,7 +4,9 @@ import UserAvatar from "components/UserAvatar";
 import { Grid, Typography } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from '@reach/router';
-import { formatAddress } from 'react-dappify/utils/format';
+import { utils } from 'react-dappify';
+
+const { formatAddress } = utils.format;
 
 const UserProfileMini = ({ profile = {} }) => {
     const theme = useTheme();

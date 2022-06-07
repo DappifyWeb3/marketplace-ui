@@ -5,11 +5,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from "react-redux";
 import { fullTextSearch } from 'store/actions/thunks';
 import * as selectors from 'store/selectors';
-import { cropText } from 'react-dappify/utils/format';
 import Identicon from 'react-identicons';
 import { Link, navigate } from '@reach/router';
 import Verified from 'components/Verified';
-import { debounce } from 'react-dappify/utils/timer';
+import { utils } from 'react-dappify';
+
+const { format, timer } = utils;
+const { cropText } = format;
+const { debounce } = timer;
 
 export default function SearchBar({t}) {
     const dispatch = useDispatch();
