@@ -1,0 +1,107 @@
+{
+    "id": "marketplace",
+    "name": "NFT Marketplace",
+    "description": "Buy and sell tokenized items in a custom nft marketplace",
+    "source": "https://github.com/DappifyWeb3/marketplace-ui",
+    "guide": "https://github.com/DappifyWeb3/marketplace-ui",
+    "image": "https://i.ibb.co/SfZyfPd/Screenshot-2022-06-09-at-07-49-35.png",
+    "sample": "https://chainbeatz.dappify.us/",
+    "version": "0.0.1",
+    "category": "nft",
+    "admin": "/admin",
+    "contract": {
+      "0x61": null,
+      "0xa869": null,
+      "0x13881": null,
+      "0x5": "0xd9954b766F4EBDa49c06afA1EECdB9cB3a866Dc5",
+      "0xa86a": null,
+      "0x38": null,
+      "0x89": null,
+      "0x1": null
+    },
+    "properties": [
+      {
+        "key": null,
+        "value": null,
+        "type": null
+      }
+    ],
+    "translation": {
+      "react": {
+        "useSuspense": true
+      },
+      "resources": {
+        "en": {
+          "translation": {
+            "Title": "Your Title",
+            "Tagline": "Your Tagline",
+            "Get started": "Get started",
+            "Explore": "Discover",
+            "Stats": "Activity",
+            "Search items": "Search items, collections and accounts",
+            "Purchase": "Buy",
+            "View artwork": "View Artwork",
+            "Price": "Price",
+            "Not for sale": "Not for sale",
+            "Browse by category": "Browse By Category",
+            "Top sellers": "Top Sellers",
+            "New items": "New Items",
+            "Hot collections": "Hot Collections",
+            "Connect your wallet": "Connect your wallet",
+            "Most popular": "Most Popular",
+            "Metamask": "Start exploring blockchain applications in seconds. Trusted by over 1 million users worldwide.",
+            "Connected to:": "Connected to:",
+            "Switch to:": "Switch to:",
+            "My profile": "My Profile",
+            "Logout": "Logout",
+            "Balance": "Balance",
+            "Owned": "Owned",
+            "On sale": "On Sale",
+            "Withdraw": "Withdraw",
+            "Edit profile": "Edit Profile",
+            "Member since": "Member since",
+            "Username": "Username",
+            "Username placeholder": "Your unique username",
+            "Bio": "Bio",
+            "Bio placeholder": "Tell everyone who you are!",
+            "Twitter": "Twitter",
+            "Twitter placeholder": "Your personal twitter account",
+            "Wallet": "Wallet",
+            "Wallet placeholder": "Your wallet address",
+            "Profile": "Profile",
+            "Upload": "Upload",
+            "Profile image": "Profile Image",
+            "Profile banner": "Profile Banner",
+            "Update profile": "Update Profile",
+            "Category": "Categories",
+            "None": "None",
+            "Cancel": "Cancel",
+            "Close": "Close",
+            "Load More": "Load More",
+            "Confirm": "Confirm",
+            "Please wait": "Please wait",
+            "Select a category": "Select a category",
+            "Details": "Details",
+            "History": "History",
+            "Owner": "Owner",
+            "Purchase confirmation": "Do you want to buy {{name}} for {{price}} {{unit}}?",
+            "Withdraw confirmation": " This action will remove this item from being accessible in this marketplace for buyers. It will carry additional gas costs to continue the process with the smart contract.",
+            "Withdraw from marketplace": "Withdraw from marketplace",
+            "Edit confirmation": "Set a new price for item in marketplace {{name}}",
+            "Edit pricing": "Edit pricing",
+            "Owner not verified": "This owner is not verified. Purchase this item at your own risk",
+            "Owner verified": "This owner is verified",
+            "Transaction successful": "Your transaction was successful!",
+            "Please do not close this window": "Please don't close this window until we have confirmed your transaction! we will let you know shortly",
+            "WalletConnect": "Open source protocol for connecting decentralised applications to mobile wallets.",
+            "Coinbase": "The easiest and most secure crypto wallet. No Coinbase account required."
+          }
+        }
+      },
+      "lng": "en",
+      "fallbackLng": "en",
+      "interpolation": {
+        "escapeValue": false
+      }
+    }
+  }

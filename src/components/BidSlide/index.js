@@ -41,7 +41,7 @@ const BidSlide = ({nft, usdPrice}) => {
                         </div>
                         <div className="d-attr">
                             <div className='col first'>
-                                <span className="d-title">{t('Price')}</span>
+                                <span className="d-title">{t('Price per unit')} (1/{nft.quantity ? nft.quantity : 1})</span>
                                 {nft.price > 0 ? (<h3>{nft.price.toFixed(3)} {network.nativeCurrency.symbol}</h3>) : <h3>{t('Not for sale')}</h3>}
                                 <h5>(${`${(nft.price * usdPrice).toFixed(2)}`})</h5>
                             </div>

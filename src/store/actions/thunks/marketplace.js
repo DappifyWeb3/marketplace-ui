@@ -2,10 +2,10 @@
 import * as actions from '../../actions';
 import { getErrorMessage } from 'store/utils';
 
-export const sellNft = (nft, price, category) => async(dispatch) => {
+export const sellNft = (nft, price, category, quantity=1) => async(dispatch) => {
   dispatch(actions.sellNft.request());
   try {
-    const offering = await nft.sellTo(price, category);
+    const offering = await nft.sellTo(price, category, quantity);
     dispatch(actions.sellNft.success(offering));
   } catch (err) {
     console.log(err);

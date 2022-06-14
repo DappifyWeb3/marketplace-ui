@@ -12404,10 +12404,10 @@ react-awesome-reveal@^3.8.1:
     react-intersection-observer "^8.32.0"
     react-is "^17.0.2"
 
-react-dappify@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/react-dappify/-/react-dappify-0.0.16.tgz#6503ef6d4dc1d513aca416ca1d25ace5ebe08b8a"
-  integrity sha512-e24s/epd753h1s4iAFb6c2W5jEJoMcYUY742PabGZKdnAMsqCiaXml7fJdzS8L56V7RWOCiBSNCe8m8ixllDvg==
+react-dappify@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/react-dappify/-/react-dappify-0.0.31.tgz#d89616b96ce2031ebb22bc3fe3227839b3a61476"
+  integrity sha512-uXZCYlSOA1BF2z1/LZvDYpx7Xj0ifKb1CMWTKUfT83AT4KlXr70KhxG3wscF/slmiORzs26kiJMU1bKRFk5wiA==
   dependencies:
     axios "^0.27.2"
     ethers "^5.6.8"

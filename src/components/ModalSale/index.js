@@ -21,7 +21,9 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const maxBid = nft?.maxBid || 0;
     const [categories] = useState(Property.findAllWithType({type:'category'}));
 
+    console.log(nft);
     const [amount, setAmount] = useState();
+    const [quantity, setQuantity] = useState(1);
 
     const getToken = () => `${nft?.metadata?.name} #${nft.tokenId}`;
 
@@ -36,7 +38,7 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     },[dispatch, isOpen])
 
     const handleAction = async() => {
-        await dispatch(sellNft(nft, amount, selectedCategory));
+        await dispatch(sellNft(nft, amount, selectedCategory, quantity));
     }
 
     const handleAmountChange = (e) => setAmount(parseFloat(e.target.value));
@@ -60,7 +62,7 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
             <DialogContentText>
                 <Grid container direction="column" spacing={1}>
                     <Grid item xs={12}>
-                        Please list my item <Typography variant="body" fontWeight={900}>{getToken()}</Typography> in the marketplace<br/>for a sale price of:
+                        Please list my item ({nft.type}) <Typography variant="body" fontWeight={900}>{getToken()}</Typography> in the marketplace for a sale price <i><u><strong>per unit</strong></u></i> of:
                     </Grid>
                     <Grid item xs={12}>
                         <FormControl variant="standard" justifyContent="center" fullWidth sx={{ mt: 3 }}>
@@ -92,6 +94,47 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
                         </FormControl>
                     </Grid>
+
+
+                    <Grid item xs={12}>
+                        <FormControl variant="standard" justifyContent="center" fullWidth sx={{ mt: 3 }}>
+                            <Input
+                            id="quantity-adornment-weight"
+                            value={quantity}
+                            disabled={nft.quantity <= 1}
+                            InputProps={{ inputProps: { min: 1, max: nft.quantity } }}
+                            onChange={(e) => {
+                                let val = parseInt(e.target.value);
+                                if (val > nft.quantity)
+                                    val = nft.quantity;
+                                setQuantity(val);
+                            }}
+                            endAdornment={<InputAdornment position="end">
+                                <Typography sx={{ opacity: 0.75 }}>
+                                    Qty (Max {nft.quantity})
+                                </Typography>
+                            </InputAdornment>}
+                            aria-describedby="quantity-amount-helper-text"
+                            type="number"
+                            sx={{
+                                '& input[type=number]': {
+                                    '-moz-appearance': 'textfield'
+                                },
+                                '& input[type=number]::-webkit-outer-spin-button': {
+                                    '-webkit-appearance': 'none',
+                                    margin: 0
+                                },
+                                '& input[type=number]::-webkit-inner-spin-button': {
+                                    '-webkit-appearance': 'none',
+                                    margin: 0
+                                }
+                            }}
+                            />
+
+                        </FormControl>
+                    </Grid>
+
+
                     {!isEmpty(categories) && (<Grid item xs={12} sx={{ mt: 2 }}>
                         <FormControl fullWidth>
                             <InputLabel id="demo-multiple-name-label">Select a category</InputLabel>
