@@ -127,10 +127,10 @@ export const bidNft = (user, nft, amount) => async(dispatch) => {
   }
 };
 
-export const purchaseNft = (user, nft, amount) => async(dispatch) => {
+export const purchaseNft = (user, nft, price, quantity) => async(dispatch) => {
   dispatch(actions.purchaseNft.request());
   try {
-    const txHash = await nft.purchase();
+    const txHash = await nft.purchase(quantity);
     dispatch(actions.purchaseNft.success(txHash));
     dispatch(fetchNftDetail(nft.collection.id, nft.id));
   } catch (err) {

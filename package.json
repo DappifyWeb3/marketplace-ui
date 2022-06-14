@@ -27,7 +27,7 @@
     "moralis": "^1.4.0",
     "react": "^17.0.2",
     "react-awesome-reveal": "^3.8.1",
-    "react-dappify": "^0.0.16",
+    "react-dappify": "^0.0.31",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.16.7",
     "react-identicons": "^1.2.5",

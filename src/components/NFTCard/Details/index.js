@@ -70,7 +70,7 @@ const Details = ({ nft, t }) => {
     return (
         <Grid container spacing={1} sx={{ px: 1, m: 0 }}>
             <Grid item xs={12}>
-                <Typography fontSize="0.85em" fontWeight="bold" color="text.secondary">{`${nft?.collection?.name} #${nft.tokenId}`}</Typography>
+                <Typography fontSize="0.85em" fontWeight="bold" color="text.secondary">{`${nft?.collection?.name ? nft?.collection?.name : ''} #${nft.tokenId}`} (1/{nft.quantity ? nft.quantity : 1}}</Typography>
                 <Typography fontSize="1.15em" fontWeight="400">{nft.metadata?.name}</Typography>
             </Grid>
             <Grid container spacing={1} sx={{ px: 1, pt: 1 }}>
