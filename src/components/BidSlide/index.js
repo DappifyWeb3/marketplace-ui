@@ -55,7 +55,7 @@ const BidSlide = ({nft, usdPrice}) => {
                     </div>
                 </div>
             </div>
-            <ModalPurchase t={t} nft={nft} isOpen={openCheckoutbid} onClose={() => {setOpenCheckoutbid(false);}}  />
+            {openCheckoutbid && (<ModalPurchase t={t} nft={nft} isOpen={openCheckoutbid} onClose={() => {setOpenCheckoutbid(false);}}  />)}
         </div>
     );
   };

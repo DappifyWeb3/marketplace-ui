@@ -1,6 +1,7 @@
 import * as actions from '../../actions';
 import { NFT } from 'react-dappify';
 import { getErrorMessage } from 'store/utils';
+import { fetchCurrentUser } from './users';
 
 export const fetchNfts = ({category=null, status=null}) => async (dispatch, getState) => {
 
@@ -19,6 +20,10 @@ export const withdrawNft = (nft) => async(dispatch) => {
   try {
     const txHash = await nft.withdrawFromMarketplace();
     dispatch(actions.withdrawNft.success(txHash));
+    dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
+    dispatch(fetchHotAuctions());
+    dispatch(fetchNftsBreakdown());
+    dispatch(fetchCurrentUser());
   } catch (err) {
     dispatch(actions.withdrawNft.failure(getErrorMessage(err)));
   }
@@ -34,7 +39,8 @@ export const saveNft = (nft, collection, imageFile, animationFile) => async(disp
   }
 };
 
-export const fetchNftsBreakdown = (Provider, authorId, isMusic = false) => async (dispatch, getState) => {
+export const fetchNftsBreakdown = () => async (dispatch, getState) => {
+  dispatch(actions.getNftBreakdown.cancel());
   dispatch(actions.getNftBreakdown.request());
   try {
     const nfts = await NFT.getNewestDrops();
@@ -75,10 +81,11 @@ export const fetchNftShowcase = () => async (dispatch) => {
   }
 };
 
-export const fetchNftDetail = (contractAddress, tokenId) => async (dispatch) => {
+export const fetchNftDetail = (contractAddress, tokenId='') => async (dispatch) => {
   dispatch(actions.getNftDetail.request());
   try {
-    const nft = await NFT.getById(contractAddress, tokenId);
+    console.log(`GettingById ${contractAddress} ${tokenId}`);
+    const nft = await NFT.getById(contractAddress, tokenId.toString());
     dispatch(actions.getNftDetail.success(nft));
   } catch (err) {
     dispatch(actions.getNftDetail.failure(err.message));
@@ -121,18 +128,20 @@ export const bidNft = (user, nft, amount) => async(dispatch) => {
   try {
     await nft.bidBy(user, amount);
     dispatch(actions.bidNft.success());
-    dispatch(fetchNftDetail(nft.collection.id, nft.id));
+    dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
   } catch (err) {
     dispatch(actions.bidNft.failure(err.message));
   }
 };
 
-export const purchaseNft = (user, nft, price, quantity) => async(dispatch) => {
+export const purchaseNft = (nft, quantity) => async(dispatch) => {
   dispatch(actions.purchaseNft.request());
   try {
     const txHash = await nft.purchase(quantity);
     dispatch(actions.purchaseNft.success(txHash));
-    dispatch(fetchNftDetail(nft.collection.id, nft.id));
+    dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
+    dispatch(fetchHotAuctions());
+    dispatch(fetchNftsBreakdown());
   } catch (err) {
     dispatch(actions.purchaseNft.failure(getErrorMessage(err)));
   }
@@ -147,4 +156,11 @@ export const toggleLikeNft = (nft) => async(dispatch) => {
   } catch (err) {
     dispatch(actions.likeNft.failure(err.message));
   }
+};
+
+export const modalReset = () => async(dispatch) => {
+  dispatch(actions.withdrawNft.cancel());
+  dispatch(actions.purchaseNft.cancel());
+  dispatch(actions.editPriceNft.cancel());
+  dispatch(actions.sellNft.cancel());
 };

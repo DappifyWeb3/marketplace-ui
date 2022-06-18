@@ -6,7 +6,7 @@ import * as selectors from 'store/selectors';
 import { sellNft } from "store/actions/thunks";
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import OperationResult from 'components/OperationResult';
-import * as actions from 'store/actions';
+import { modalReset } from 'store/actions/thunks';
 import ModalActions from 'components/ModalActions';
 import isEmpty from 'lodash/isEmpty';
 
@@ -21,7 +21,6 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const maxBid = nft?.maxBid || 0;
     const [categories] = useState(Property.findAllWithType({type:'category'}));
 
-    console.log(nft);
     const [amount, setAmount] = useState();
     const [quantity, setQuantity] = useState(1);
 
@@ -34,7 +33,9 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     }, [isBid, maxBid, nft, priceOver]);
 
     useEffect(() => {
-        dispatch(actions.sellNft.cancel());
+        return async () => {
+            await dispatch(modalReset());
+        };
     },[dispatch, isOpen])
 
     const handleAction = async() => {

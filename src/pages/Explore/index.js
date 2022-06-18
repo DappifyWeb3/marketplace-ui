@@ -21,7 +21,6 @@ const Explore = ({t}) => {
   const [category, setCategory] = useState(categories.find((cat) => toUri(cat.key) === parse(location.search).category)?.key);
 
   useEffect(() => {
-    console.log(category);
       const status = 'OfferingPlaced';
       dispatch(fetchNfts({ category, status}));
   }, [dispatch, configuration, category]);

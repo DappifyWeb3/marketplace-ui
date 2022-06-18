@@ -3,7 +3,7 @@ import { Grid, Dialog, DialogContent, DialogTitle, DialogContentText } from '@mu
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
 import * as actions from 'store/actions';
-import { withdrawNft } from "store/actions/thunks";
+import { withdrawNft, modalReset } from "store/actions/thunks";
 import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import ModalActions from 'components/ModalActions';
@@ -17,6 +17,9 @@ const ModalWithdraw = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
     useEffect(() => {
       dispatch(actions.editPriceNft.cancel());
+      return async () => {
+        await dispatch(modalReset());
+      };
     },[dispatch, isOpen])
 
     const handleAction = async() => {

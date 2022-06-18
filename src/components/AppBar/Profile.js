@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+import { useState, Fragment } from 'react';
 import { Chip } from '@mui/material';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
@@ -30,11 +30,11 @@ const { cropText } = utils.format;
 export default function Profile({ t }) {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const { nativeBalance, logout, isAuthenticated, isRightNetwork, switchToChain, configuration, getProviderInstance } = useContext(DappifyContext);
+    const { nativeBalance, logout, isAuthenticated, switchToChain, configuration, getProviderInstance, isRightNetwork } = useContext(DappifyContext);
     const network = constants.NETWORKS[configuration.chainId];
     const currentUserState = useSelector(selectors.currentUserState);
     const currentUser = currentUserState.data || {};
-
+  
     useEffect(() => {
         dispatch(fetchCurrentUser());
     }, [dispatch]);
@@ -45,7 +45,7 @@ export default function Profile({ t }) {
         (<Identicon string={currentUser.wallet} size={40} bg={theme.palette.primary.main} />) : 
         (<Avatar sx={imgSize} ><AccountCircleTwoToneIcon sx={imgSize}/></Avatar>)
 
-        const [anchorEl, setAnchorEl] = React.useState(null);
+        const [anchorEl, setAnchorEl] = useState(null);
         const open = Boolean(anchorEl);
         const handleClick = (event) => {
           isAuthenticated ? 
@@ -101,7 +101,7 @@ export default function Profile({ t }) {
     );
 
     return (
-      <React.Fragment>
+      <Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
                 <IconButton
                   onClick={handleClick}
@@ -178,6 +178,6 @@ export default function Profile({ t }) {
                 {t('Logout')}
               </MenuItem>
             </Menu>
-          </React.Fragment>
+          </Fragment>
           );
 }

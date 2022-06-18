@@ -172,7 +172,6 @@ const Home = ({t}) => {
 
   const renderLayout = () => {
     const layout = Property.findAllWithType({ type: 'layoutItem' });
-    console.log(layout);
     landingPage.sections.forEach((segment) => {
       const component = sectionMapping[segment.type](segment.metadata, t, theme)
       layout.push(component);

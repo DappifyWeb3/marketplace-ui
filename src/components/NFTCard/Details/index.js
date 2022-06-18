@@ -18,10 +18,10 @@ const Details = ({ nft, t }) => {
     const { configuration } = useContext(DappifyContext);
     const network = constants.NETWORKS[configuration.chainId];
     const dispatch = useDispatch();
-    const [isOpenSale, setOpenSale] = useState();
-    const [isOpenWithdraw, setOpenWithdraw] = useState();
-    const [isOpenPurchase, setOpenPurchase] = useState();
-    const [isOpenEdit, setOpenEdit] = useState();
+    const [isOpenSale, setOpenSale] = useState(false);
+    const [isOpenWithdraw, setOpenWithdraw] = useState(false);
+    const [isOpenPurchase, setOpenPurchase] = useState(false);
+    const [isOpenEdit, setOpenEdit] = useState(false);
 
     const currentUserState = useSelector(selectors.currentUserState);
     const currentUser = currentUserState.data || {};
@@ -125,10 +125,10 @@ const Details = ({ nft, t }) => {
                     </Grid>
                 </Grid>
 
-                <ModalSale nft={nft} isOpen={isOpenSale} onClose={handleSell} t={t} />
-                <ModalPurchase nft={nft} isOpen={isOpenPurchase} onClose={handlePurchase} t={t} />
-                <ModalWithdraw nft={nft} isOpen={isOpenWithdraw} onClose={handleWithdraw} t={t} />
-                <ModalEdit nft={nft} isOpen={isOpenEdit} onClose={handleEdit} t={t} />
+                {isOpenSale && (<ModalSale nft={nft} isOpen={isOpenSale} onClose={handleSell} t={t} />)}
+                {isOpenPurchase && (<ModalPurchase nft={nft} isOpen={isOpenPurchase} onClose={handlePurchase} t={t} />)}
+                {isOpenWithdraw && (<ModalWithdraw nft={nft} isOpen={isOpenWithdraw} onClose={handleWithdraw} t={t} />)}
+                {isOpenEdit && (<ModalEdit nft={nft} isOpen={isOpenEdit} onClose={handleEdit} t={t} />)}
             </Grid>
             {/*<Grid item xs={6} sx={{ pb: 2 }} textAlign="right">
                 <span style={{opacity:0.5}}>{likes}</span>
