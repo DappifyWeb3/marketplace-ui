@@ -8,7 +8,7 @@ import { fetchNftsBreakdown } from "../../store/actions/thunks";
 import NFTCard from "components/NFTCard";
 
 const settings = {
-  dots: false,
+  dots: true,
   infinite: true,
   speed: 500,
   slidesToShow: 4,
@@ -63,7 +63,7 @@ const NFTSlider = ({t}) => {
     }, [dispatch]);
 
     return (
-        <div className='nft'>
+        <div className='nft' id="nftslider">
           <Slider {...settings}>
           {nfts && nfts.map( (nft, index) => (
             <div index={index + 1} key={index} className="slider-item">

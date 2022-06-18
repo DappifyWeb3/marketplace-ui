@@ -57,7 +57,6 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
         });
         return list;
       }
-      console.log(nft);
     return (
         <div className="theme-background">
             <section className='container'>
@@ -75,9 +74,11 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
                         <div className="item_info">
 
                             <h2>{nft?.metadata?.name}</h2>
-                            <Grid container>
-                                <Chip variant="outlined" color="secondary" label={nft.category} />
-                            </Grid>
+                            {nft.category && (
+                                <Grid container>
+                                    <Chip variant="outlined" color="secondary" label={nft.category} />
+                                </Grid>
+                            )}
                             <Grid container sx={{ mt: 3 }}>
                                 {nft?.metadata?.description}
                             </Grid>
@@ -137,7 +138,7 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
             </div>
         </section>
         <Footer t={t}/> 
-        <ModalPurchase t={t} nft={nft} isOpen={openCheckout || openCheckoutbid} onClose={() => { setOpenCheckout(false); setOpenCheckoutbid(false);}} isBid={openCheckoutbid} />
+        {(openCheckout || openCheckoutbid) && (<ModalPurchase t={t} nft={nft} isOpen={openCheckout || openCheckoutbid} onClose={() => { setOpenCheckout(false); setOpenCheckoutbid(false);}} isBid={openCheckoutbid} />)}
 
         </div>
     );

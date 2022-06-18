@@ -82,7 +82,8 @@ export const getNftLikes = asyncAction(
 export const getNftBreakdown = asyncAction(
     'nft/GET_NFT_BREAKDOWN',
     'nft/GET_NFT_BREAKDOWN_SUCCESS',
-    'nft/GET_NFT_BREAKDOWN_FAIL'
+    'nft/GET_NFT_BREAKDOWN_FAIL',
+    'nft/GET_NFT_BREAKDOWN_CANCEL'
 )();
 
 export const getNftsFromCollection = asyncAction(

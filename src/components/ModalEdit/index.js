@@ -6,9 +6,9 @@ import * as selectors from 'store/selectors';
 import { editPriceNft } from "store/actions/thunks";
 import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
-import * as actions from 'store/actions';
 import ModalActions from 'components/ModalActions';
 import { constants } from 'react-dappify';
+import { modalReset } from 'store/actions/thunks';
 
 const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
@@ -23,7 +23,9 @@ const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const getToken = () => `${nft?.metadata?.name} #${nft.tokenId}`;
 
     useEffect(() => {
-        dispatch(actions.editPriceNft.cancel());
+        return async () => {
+            await dispatch(modalReset());
+        };
     },[dispatch, isOpen])
 
     useEffect(() => {
