@@ -1,5 +1,5 @@
 import * as actions from 'store/actions';
-import Project from 'react-dappify/model/Project';
+import {Project} from 'react-dappify';
 
 export const fetchTokenPrice = () => async(dispatch) => {
   dispatch(actions.getTokenPrice.request());

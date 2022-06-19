@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+import { useState, Fragment } from 'react';
 import { Chip } from '@mui/material';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
@@ -12,7 +12,7 @@ import Logout from '@mui/icons-material/Logout';
 import { useContext, useEffect } from 'react';
 import { useTheme } from "@mui/material/styles";
 import { Avatar, IconButton } from '@mui/material';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, utils } from 'react-dappify';
 import { fetchCurrentUser } from 'store/actions/thunks';
 import * as selectors from 'store/selectors';
 import { useDispatch, useSelector } from "react-redux";
@@ -20,20 +20,21 @@ import Identicon from 'react-identicons';
 import { navigate } from "@reach/router";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import CopyAddress from 'components/CopyAddress';
-import { cropText } from 'react-dappify/utils/format';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import constants from 'react-dappify/constants';
+import { constants } from 'react-dappify';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+
+const { cropText } = utils.format;
 
 export default function Profile({ t }) {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const { nativeBalance, logout, isAuthenticated, isRightNetwork, verifyNetwork, project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { nativeBalance, logout, isAuthenticated, switchToChain, configuration, getProviderInstance, isRightNetwork } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
     const currentUserState = useSelector(selectors.currentUserState);
     const currentUser = currentUserState.data || {};
-
+  
     useEffect(() => {
         dispatch(fetchCurrentUser());
     }, [dispatch]);
@@ -44,20 +45,26 @@ export default function Profile({ t }) {
         (<Identicon string={currentUser.wallet} size={40} bg={theme.palette.primary.main} />) : 
         (<Avatar sx={imgSize} ><AccountCircleTwoToneIcon sx={imgSize}/></Avatar>)
 
-        const [anchorEl, setAnchorEl] = React.useState(null);
-        const open = Boolean(anchorEl);
-        const handleClick = (event) => {
-          isAuthenticated ? 
-            setAnchorEl(event.currentTarget) :
-            navigate('/wallet');
-        };
-        const handleClose = () => {
-          setAnchorEl(null);
-        };
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+      isAuthenticated ? 
+        setAnchorEl(event.currentTarget) :
+        navigate('/wallet');
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
     const handleLogout = async () => {
         await logout();
         navigate('/');
+    }
+
+    const goToNetwork = async () => {
+      const currentProvider = await getProviderInstance();
+      await switchToChain(configuration, currentProvider);
     }
 
     const renderNetwork = () => {
@@ -68,8 +75,8 @@ export default function Profile({ t }) {
       return (
         <Grid container direction="row" justifyContent="center" spacing={2}>
           <Grid item xs={12} sx={{ mt: 2 }}>
-            <Chip onClick={verifyNetwork}
-                  onDelete={verifyNetwork} 
+            <Chip onClick={goToNetwork}
+                  onDelete={goToNetwork} 
                   variant="contained" 
                   color={color} 
                   label={`${prefix} ${name}`} 
@@ -80,7 +87,7 @@ export default function Profile({ t }) {
       );
     }
 
-    const renderBalance = () => isRightNetwork && (
+    const renderBalance = () => (
       <Grid container direction="row">
         <Grid item>
             <img className="img_symbol" src={constants.LOGO[network.nativeCurrency.symbol]} alt={network.nativeCurrency.symbol} />
@@ -95,7 +102,7 @@ export default function Profile({ t }) {
     );
 
     return (
-      <React.Fragment>
+      <Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
                 <IconButton
                   onClick={handleClick}
@@ -172,6 +179,6 @@ export default function Profile({ t }) {
                 {t('Logout')}
               </MenuItem>
             </Menu>
-          </React.Fragment>
+          </Fragment>
           );
 }

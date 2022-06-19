@@ -104,6 +104,7 @@
 
 .super__size {
   width: 100%;
+  min-height: 400px;
 }
 
 .super__size:after {
@@ -132,4 +133,8 @@
   max-width: 60px;
   max-height: 60px;
   margin-right: 10px;
+}
+
+#nftslider .slick-list {
+  height: 410px !important;
 }

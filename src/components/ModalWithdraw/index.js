@@ -1,32 +1,47 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { Grid, Dialog, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
 import * as actions from 'store/actions';
-import { withdrawNft } from "store/actions/thunks";
+import { withdrawNft, modalReset } from "store/actions/thunks";
 import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import ModalActions from 'components/ModalActions';
+import { fetchNftDetail, fetchHotAuctions, fetchNftsBreakdown } from 'store/actions/thunks/nfts';
+import { fetchCurrentUser } from 'store/actions/thunks/users';
+import { DappifyContext } from 'react-dappify';
 
 const ModalWithdraw = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
     const dispatch = useDispatch();
-
+    const { loadBalances } = useContext(DappifyContext);
     const withdrawState = useSelector(selectors.nftWithdrawState);
     const isWithdrawing = withdrawState.loading;
 
     useEffect(() => {
       dispatch(actions.editPriceNft.cancel());
+      return async () => {
+        await dispatch(modalReset());
+      };
     },[dispatch, isOpen])
 
     const handleAction = async() => {
         await dispatch(withdrawNft(nft));
     }
 
+    const handleClose = async() => {
+      dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
+      dispatch(fetchHotAuctions());
+      dispatch(fetchNftsBreakdown());
+      dispatch(fetchCurrentUser());
+      loadBalances();
+      onClose();
+    }
+
     return (
         <Dialog
         open={isOpen}
-        onClose={onClose}
+        onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -42,7 +57,7 @@ const ModalWithdraw = ({ isOpen=false, onClose, isBid, nft, t }) => {
             </Grid>
           </DialogContentText>
           <ModalActions   state={withdrawState} 
-                          onClose={onClose} 
+                          onClose={handleClose} 
                           handleAction={handleAction} 
                           t={t} 
                           confirmLabel="Confirm" 

@@ -19,7 +19,7 @@ export const defaultState = {
 
 const states = (state = defaultState, action) => {
   switch (action.type) {
-    
+
     case getType(actions.fullTextSearch.request):
       return { ...state, fullTextSearchResults: entityLoadingStarted(state.fullTextSearchResults, action.payload) };
     case getType(actions.fullTextSearch.success):
@@ -42,7 +42,8 @@ const states = (state = defaultState, action) => {
           return { ...state, purchase: entityLoadingSucceeded(state.purchase, action.payload) };
         case getType(actions.purchaseNft.failure):
           return { ...state, purchase: entityLoadingFailed(state.purchase, action.payload) };
-        
+          case getType(actions.purchaseNft.cancel):
+            return { ...state, purchase: initEntityState(null)};
 
     case getType(actions.getNfts.request):
       return { ...state, nfts: entityLoadingStarted(state.nfts, action.payload) };
@@ -56,8 +57,8 @@ const states = (state = defaultState, action) => {
       return { ...state, nftAuctions: entityLoadingStarted(state.nftAuctions, action.payload) };
     case getType(actions.getNftAuctions.success):
       //append existing data with new data
-      let auctions = state.nftAuctions.data ? [...state.nftAuctions.data, ...action.payload] : action.payload;
-      return { ...state, nftAuctions: entityLoadingSucceeded(state.nftAuctions, auctions) };
+      // let auctions = state.nftAuctions.data ? [...state.nftAuctions.data, ...action.payload] : action.payload;
+      return { ...state, nftAuctions: entityLoadingSucceeded(state.nftAuctions, action.payload) };
     case getType(actions.getNftAuctions.failure):
       return { ...state, nftAuctions: entityLoadingFailed(state.nftAuctions) };
     
@@ -66,11 +67,13 @@ const states = (state = defaultState, action) => {
       return { ...state, nftBreakdown: entityLoadingStarted(state.nftBreakdown, action.payload) };
     case getType(actions.getNftBreakdown.success):
       //append existing data with new data
-      let payload = state.nftBreakdown.data ? [...state.nftBreakdown.data, ...action.payload] : action.payload;
-      return { ...state, nftBreakdown: entityLoadingSucceeded(state.nftBreakdown, payload) };
+      // let payload = state.nftBreakdown.data ? [...state.nftBreakdown.data, ...action.payload] : action.payload;
+      return { ...state, nftBreakdown: entityLoadingSucceeded(state.nftBreakdown, action.payload) };
     case getType(actions.getNftBreakdown.failure):
       return { ...state, nftBreakdown: entityLoadingFailed(state.nftBreakdown) };
-    
+      case getType(actions.getNftBreakdown.cancel):
+        return { ...state, nftBreakdown: initEntityState(null)};
+
     case getType(actions.getNftDetail.request):
       return { ...state, nftDetail: entityLoadingStarted(state.nftDetail, action.payload) };
     case getType(actions.getNftDetail.success):

@@ -10,7 +10,7 @@ const Footer = ({t}) => {
     const [year] = useState(new Date().getFullYear());
     const [footerColor] = useState(theme.palette.secondary.main);
 
-    const getHeader = (column) => configuration.footer[column]['title'];
+    const getHeader = (column) => 'test';//configuration.footer[column]['title'];
 
     const renderItems = (column) => {
         const list = [];

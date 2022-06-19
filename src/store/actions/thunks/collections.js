@@ -1,5 +1,5 @@
 import * as actions from '../../actions';
-import Collection from 'react-dappify/model/Collection';
+import {Collection} from 'react-dappify';
 
 export const saveCollection = (collection, imageFile) => async(dispatch) => {
   dispatch(actions.saveCollection.request());

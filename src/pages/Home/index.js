@@ -10,7 +10,7 @@ import SliderMultiImage from 'components/Segment/SliderMultiImage';
 import SliderSingleImage from 'components/Segment/SliderSingleImage';
 import SliderCarousel from 'components/Segment/SliderCarousel';
 import News from 'components/Segment/News';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, Property } from 'react-dappify';
 import { Box } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 
@@ -141,18 +141,49 @@ const sectionMapping = {
 const Home = ({t}) => {
   const theme = useTheme();
   const { configuration } = useContext(DappifyContext);
+
+  const landingPage = {
+    "background": null,
+    "sections": [
+      {
+        "type": "static",
+        "metadata": {
+          "cta": "/explore"
+        }
+      },
+      {
+        "type": "individualShowcase",
+        "metadata": {}
+      },
+      {
+        "type": "sellers",
+        "metadata": {}
+      },
+      {
+        "type": "groupShowcase",
+        "metadata": {}
+      },
+      {
+        "type": "categories",
+        "metadata": {}
+      }
+    ]
+  };
+
   const renderLayout = () => {
-    const layout = [];
-    configuration.landingPage.sections.forEach((segment) => {
+    const layout = Property.findAllWithType({ type: 'layoutItem' });
+    landingPage.sections.forEach((segment) => {
       const component = sectionMapping[segment.type](segment.metadata, t, theme)
       layout.push(component);
     });
     return layout;
   }
 
+  const backgroundImage = Property.find({ type: 'layout', key: 'backgroundUrl'}) || {};
+
   return (
     <Box className='theme-background'>
-        <img alt="" src={configuration.landingPage.background} style={{
+        <img alt="" src={backgroundImage?.value} style={{
           position: 'absolute',
           backgroundSize: 'cover',
           width: '100%',

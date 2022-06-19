@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from "react";
 import { Typography, Grid, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Button, Slide } from '@mui/material';
-import Collection from 'react-dappify/model/Collection';
+import {Collection} from 'react-dappify';
 import { useDispatch } from "react-redux";
 
 import { saveCollection } from 'store/actions/thunks';

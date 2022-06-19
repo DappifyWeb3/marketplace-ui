@@ -1,15 +1,16 @@
 import React, { memo, useContext } from 'react';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants, utils } from 'react-dappify';
 import { Grid, Typography } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from '@reach/router';
 import UserAvatar from 'components/UserAvatar';
-import { cropText, formatAddress } from 'react-dappify/utils/format';
+
+const { cropText, formatAddress } = utils.format;
 
 //react functional component
 const UserSales = ({ user, index }) => {
-    const { project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { configuration } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
     const navigate = useNavigate();
     const theme = useTheme();
 
@@ -43,7 +44,7 @@ const UserSales = ({ user, index }) => {
                                 opacity: 0.7, 
                                 fontWeight: '400' 
                             }}>
-                                {user.totalSales.toFixed(2)} {network?.nativeCurrency?.symbol}
+                                {user.totalSales.toFixed(3)} {network?.nativeCurrency?.symbol}
                             </Typography>
                         </Grid>
                     </Grid>                             

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants } from 'react-dappify';
 import {  Grid, Typography, Tooltip, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import * as selectors from 'store/selectors';
@@ -15,13 +15,13 @@ import { fetchCurrentUser, fetchNftsBreakdown, fetchUserRanking, fetchHotAuction
 
 //react functional component
 const Details = ({ nft, t }) => {
-    const { project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { configuration } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
     const dispatch = useDispatch();
-    const [isOpenSale, setOpenSale] = useState();
-    const [isOpenWithdraw, setOpenWithdraw] = useState();
-    const [isOpenPurchase, setOpenPurchase] = useState();
-    const [isOpenEdit, setOpenEdit] = useState();
+    const [isOpenSale, setOpenSale] = useState(false);
+    const [isOpenWithdraw, setOpenWithdraw] = useState(false);
+    const [isOpenPurchase, setOpenPurchase] = useState(false);
+    const [isOpenEdit, setOpenEdit] = useState(false);
 
     const currentUserState = useSelector(selectors.currentUserState);
     const currentUser = currentUserState.data || {};
@@ -70,7 +70,7 @@ const Details = ({ nft, t }) => {
     return (
         <Grid container spacing={1} sx={{ px: 1, m: 0 }}>
             <Grid item xs={12}>
-                <Typography fontSize="0.85em" fontWeight="bold" color="text.secondary">{`${nft?.collection?.name} #${nft.tokenId}`}</Typography>
+                <Typography fontSize="0.85em" fontWeight="bold" color="text.secondary">{`${nft?.collection?.name ? nft?.collection?.name : ''} #${nft.tokenId}`} (1/{nft.quantity ? nft.quantity : 1}}</Typography>
                 <Typography fontSize="1.15em" fontWeight="400">{nft.metadata?.name}</Typography>
             </Grid>
             <Grid container spacing={1} sx={{ px: 1, pt: 1 }}>
@@ -125,10 +125,10 @@ const Details = ({ nft, t }) => {
                     </Grid>
                 </Grid>
 
-                <ModalSale nft={nft} isOpen={isOpenSale} onClose={handleSell} t={t} />
-                <ModalPurchase nft={nft} isOpen={isOpenPurchase} onClose={handlePurchase} t={t} />
-                <ModalWithdraw nft={nft} isOpen={isOpenWithdraw} onClose={handleWithdraw} t={t} />
-                <ModalEdit nft={nft} isOpen={isOpenEdit} onClose={handleEdit} t={t} />
+                {isOpenSale && (<ModalSale nft={nft} isOpen={isOpenSale} onClose={handleSell} t={t} />)}
+                {isOpenPurchase && (<ModalPurchase nft={nft} isOpen={isOpenPurchase} onClose={handlePurchase} t={t} />)}
+                {isOpenWithdraw && (<ModalWithdraw nft={nft} isOpen={isOpenWithdraw} onClose={handleWithdraw} t={t} />)}
+                {isOpenEdit && (<ModalEdit nft={nft} isOpen={isOpenEdit} onClose={handleEdit} t={t} />)}
             </Grid>
             {/*<Grid item xs={6} sx={{ pb: 2 }} textAlign="right">
                 <span style={{opacity:0.5}}>{likes}</span>

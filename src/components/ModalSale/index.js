@@ -1,25 +1,30 @@
 import { useState, useEffect, useContext } from 'react';
 import { OutlinedInput, MenuItem, Grid, Dialog, DialogContent, Select, DialogTitle, DialogContentText, Typography, Input, FormControl, InputLabel, InputAdornment } from '@mui/material';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, constants, Property } from 'react-dappify';
 import { useSelector, useDispatch } from 'react-redux';
 import * as selectors from 'store/selectors';
 import { sellNft } from "store/actions/thunks";
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import OperationResult from 'components/OperationResult';
-import * as actions from 'store/actions';
+import { modalReset } from 'store/actions/thunks';
 import ModalActions from 'components/ModalActions';
+import isEmpty from 'lodash/isEmpty';
+import { fetchNftDetail, fetchHotAuctions, fetchNftsBreakdown } from 'store/actions/thunks/nfts';
+import { fetchCurrentUser } from 'store/actions/thunks/users';
 
 const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState();
     const nftSellState = useSelector(selectors.nftSellState);
     const isSelling = nftSellState.loading;
-    const {configuration, project } = useContext(DappifyContext);
-    const network = project?.getNetworkContext('marketplace');
+    const { configuration, loadBalances } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
     const priceOver = configuration?.feature?.bids?.priceOver;
     const maxBid = nft?.maxBid || 0;
+    const [categories] = useState(Property.findAllWithType({type:'category'}));
 
     const [amount, setAmount] = useState();
+    const [quantity, setQuantity] = useState(1);
 
     const getToken = () => `${nft?.metadata?.name} #${nft.tokenId}`;
 
@@ -30,11 +35,22 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     }, [isBid, maxBid, nft, priceOver]);
 
     useEffect(() => {
-        dispatch(actions.sellNft.cancel());
+        return async () => {
+            await dispatch(modalReset());
+        };
     },[dispatch, isOpen])
 
     const handleAction = async() => {
-        await dispatch(sellNft(nft, amount, selectedCategory));
+        await dispatch(sellNft(nft, amount, selectedCategory, quantity));
+    }
+
+    const handleClose = async() => {
+        dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
+        dispatch(fetchHotAuctions());
+        dispatch(fetchNftsBreakdown());
+        dispatch(fetchCurrentUser());
+        loadBalances();
+        onClose();
     }
 
     const handleAmountChange = (e) => setAmount(parseFloat(e.target.value));
@@ -43,13 +59,11 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
         setSelectedCategory(e.target.value);
     }
 
-    const canConfirm = amount === 0 || !selectedCategory;
-
     return (
 
         <Dialog
             open={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             aria-labelledby="parent-modal-title"
             aria-describedby="parent-modal-description"
         >
@@ -60,7 +74,7 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
             <DialogContentText>
                 <Grid container direction="column" spacing={1}>
                     <Grid item xs={12}>
-                        Please list my item <Typography variant="body" fontWeight={900}>{getToken()}</Typography> in the marketplace<br/>for a sale price of:
+                        Please list my item ({nft.type}) <Typography variant="body" fontWeight={900}>{getToken()}</Typography> in the marketplace for a sale price <i><u><strong>per unit</strong></u></i> of:
                     </Grid>
                     <Grid item xs={12}>
                         <FormControl variant="standard" justifyContent="center" fullWidth sx={{ mt: 3 }}>
@@ -92,7 +106,48 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sx={{ mt: 2 }}>
+
+
+                    <Grid item xs={12}>
+                        <FormControl variant="standard" justifyContent="center" fullWidth sx={{ mt: 3 }}>
+                            <Input
+                            id="quantity-adornment-weight"
+                            value={quantity}
+                            disabled={nft.quantity <= 1}
+                            InputProps={{ inputProps: { min: 1, max: nft.quantity } }}
+                            onChange={(e) => {
+                                let val = parseInt(e.target.value);
+                                if (val > nft.quantity)
+                                    val = nft.quantity;
+                                setQuantity(val);
+                            }}
+                            endAdornment={<InputAdornment position="end">
+                                <Typography sx={{ opacity: 0.75 }}>
+                                    Qty (Max {nft.quantity})
+                                </Typography>
+                            </InputAdornment>}
+                            aria-describedby="quantity-amount-helper-text"
+                            type="number"
+                            sx={{
+                                '& input[type=number]': {
+                                    '-moz-appearance': 'textfield'
+                                },
+                                '& input[type=number]::-webkit-outer-spin-button': {
+                                    '-webkit-appearance': 'none',
+                                    margin: 0
+                                },
+                                '& input[type=number]::-webkit-inner-spin-button': {
+                                    '-webkit-appearance': 'none',
+                                    margin: 0
+                                }
+                            }}
+                            />
+
+                        </FormControl>
+                    </Grid>
+
+
+                    {!isEmpty(categories) && (<Grid item xs={12} sx={{ mt: 2 }}>
                         <FormControl fullWidth>
                             <InputLabel id="demo-multiple-name-label">Select a category</InputLabel>
                             <Select
@@ -102,23 +157,23 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
                             onChange={handleSelectCategory}
                             input={<OutlinedInput label={t('Select a category')} />}
                             >
-                            {configuration.categories.map((category) => (
+                            {categories.map((category) => (
                                 <MenuItem
-                                key={category.uri}
-                                value={category}
+                                key={category.key}
+                                value={category.key}
                                 >
-                                {category.label}
+                                {category.key}
                                 </MenuItem>
                             ))}
                             </Select>
                         </FormControl>
-                    </Grid>
+                    </Grid> )}
                     {isSelling && (<ConfirmationWarning t={t} />)}
                     <OperationResult state={nftSellState} t={t} />
                 </Grid>
             </DialogContentText>
                  <ModalActions  state={nftSellState} 
-                                onClose={onClose} 
+                                onClose={handleClose} 
                                 handleAction={handleAction} 
                                 t={t} 
                                 confirmLabel="Confirm" 

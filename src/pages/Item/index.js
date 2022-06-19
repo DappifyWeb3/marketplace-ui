@@ -1,15 +1,18 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Footer from 'components/Segment/Footer';
 import * as selectors from 'store/selectors';
 import { fetchNftDetail } from "store/actions/thunks";
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Chip } from '@mui/material';
+import { DappifyContext, constants } from "react-dappify";
+import { useTheme } from "@mui/material/styles";
 import ImageFadeIn from "react-image-fade-in";
 import ActivityItem from "components/ActivityItem";
 import ModalPurchase from "components/ModalPurchase";
-
+import UserProfileMini from "components/UserProfileMini";
 
 const ItemDetail = ({ contractAddress, tokenId, t }) => {
+    const theme = useTheme();
     const [openDetails, setOpenDetails] = React.useState(true);
     const [openHistory, setOpenHistory] = React.useState(false);
     const dispatch = useDispatch();
@@ -18,6 +21,8 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
     const nft = nftHistory[0] || {};
     const [openCheckout, setOpenCheckout] = React.useState(false);
     const [openCheckoutbid, setOpenCheckoutbid] = React.useState(false);
+    const { configuration } = useContext(DappifyContext);
+    const network = constants.NETWORKS[configuration.chainId];
 
     useEffect(() => {
         dispatch(fetchNftDetail(contractAddress, tokenId));
@@ -52,13 +57,14 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
         });
         return list;
       }
-
     return (
         <div className="theme-background">
             <section className='container'>
                 <div className='row mt-md-5 pt-md-4'>
                     <div className="col-md-6 text-center">
-                        {imageUrl && <ImageFadeIn height="auto" width="100%" src={imageUrl} alt=""/> }
+                        {imageUrl && <ImageFadeIn height="auto" width="100%" src={imageUrl} alt={nft?.metadata?.name} style={{
+                            borderRadius: theme?.shape?.borderRadius
+                        }} /> }
                         {nft?.metadata?.animation_url && <audio src={nft.metadata.animation_url} controls controlsList="nodownload" className="audio__controller">
                             Your browser does not support the audio element.
                         </audio>}
@@ -68,13 +74,14 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
                         <div className="item_info">
 
                             <h2>{nft?.metadata?.name}</h2>
-                            <div className="item_info_counts">
-                                <div className="item_info_type"><i className="fa fa-image"></i>{nft.category}</div>
-                                <div className="item_info_views"><i className="fa fa-eye"></i>{nft.views}</div>
-                                <div className="item_info_like"><i className="fa fa-heart"></i>{nft.likes}</div>
-                            </div>
-                            <p>{nft?.metadata?.description}</p>
-
+                            {nft.category && (
+                                <Grid container>
+                                    <Chip variant="outlined" color="secondary" label={nft.category} />
+                                </Grid>
+                            )}
+                            <Grid container sx={{ mt: 3 }}>
+                                {nft?.metadata?.description}
+                            </Grid>
 
                             <div className="spacer-40"></div>
 
@@ -104,17 +111,7 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
                                     <div className="d-block mb-3">
                                         <div className="mr40">
                                             <h6>{t('Owner')}</h6>
-                                            <div className="item_author">                                    
-                                                <div className="author_list_pp">
-                                                    <span>
-                                                        <img className="lazy" src={nft?.owner?.image} alt=""/>
-                                                        <i className="fa fa-check"></i>
-                                                    </span>
-                                                </div>                                    
-                                                <div className="author_list_info">
-                                                    <span>{nft?.author?.username}</span>
-                                                </div>
-                                            </div>
+                                            <UserProfileMini profile={nft?.owner} />
                                         </div>
                                         <Grid container>
                                             {renderAttributes()}
@@ -131,7 +128,7 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
 
                                 {/* button for checkout */}
                                 <div className="d-flex flex-row mt-5">
-                                    { nft.status === 'OfferingPlaced' && <Button fullWidth sx={{ marginTop: 5 }} size="large" variant="contained" onClick={() => setOpenCheckout(true)}>{t('Purchase')}</Button> }
+                                    { nft.status === 'OfferingPlaced' && <Button fullWidth sx={{ marginTop: 5 }} size="large" variant="contained" onClick={() => setOpenCheckout(true)}>{t('Purchase')} {nft.price.toFixed(3)} {network.nativeCurrency.symbol}</Button> }
                                    {/* } <button className='btn-main btn2 lead mb-5' onClick={() => setOpenCheckoutbid(true)}>Place Bid</button> */}
                                 </div>
                             </div>     
@@ -141,7 +138,7 @@ const ItemDetail = ({ contractAddress, tokenId, t }) => {
             </div>
         </section>
         <Footer t={t}/> 
-        <ModalPurchase t={t} nft={nft} isOpen={openCheckout || openCheckoutbid} onClose={() => { setOpenCheckout(false); setOpenCheckoutbid(false);}} isBid={openCheckoutbid} />
+        {(openCheckout || openCheckoutbid) && (<ModalPurchase t={t} nft={nft} isOpen={openCheckout || openCheckoutbid} onClose={() => { setOpenCheckout(false); setOpenCheckoutbid(false);}} isBid={openCheckoutbid} />)}
 
         </div>
     );

@@ -1,12 +1,11 @@
 import { useContext } from 'react';
 import { useTheme } from "@mui/material/styles";
 import { Grid, Chip, Typography, Paper } from '@mui/material';
-import { DappifyContext } from 'react-dappify';
+import { DappifyContext, supportedWallets } from 'react-dappify';
 import { useNavigate } from '@reach/router';
 import { useDispatch } from "react-redux";
 import { fetchCurrentUser } from 'store/actions/thunks';
 import { useTranslation } from 'react-i18next';
-import { supportedWallets } from 'react-dappify/wallets';
   
 const Wallet= () => {
     const { t } = useTranslation();
