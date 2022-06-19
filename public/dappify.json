@@ -10,14 +10,14 @@
     "category": "nft",
     "admin": "/admin",
     "contract": {
-      "0x61": null,
-      "0xa869": null,
-      "0x13881": null,
+      "0x61": "0xdC10aa8B2b30DFaB7B10Cbb7E50e2f32568a7a5B",
+      "0xa869": "0x68b62a0B06028776c87A31A23D718EC982FD2084",
+      "0x13881": "0x68b62a0B06028776c87A31A23D718EC982FD2084",
       "0x5": "0xd9954b766F4EBDa49c06afA1EECdB9cB3a866Dc5",
-      "0xa86a": null,
-      "0x38": null,
-      "0x89": null,
-      "0x1": null
+      "0xa86a": "0xA05a64Af69AfA088fcd3D0D2f18147B4F21dDb09",
+      "0x38": "0x275E6A2aD3598189a2897F5b6af2F54E7cb623eF",
+      "0x89": "0xA5691FD7f70e85F56ce663c7233deE22Cd57FAE7",
+      "0x1": "0x2FC6A0163ac0c3d5E5bbe711f8B392B9C973bFcA"
     },
     "properties": [
       {
