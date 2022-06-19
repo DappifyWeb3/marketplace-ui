@@ -9,13 +9,15 @@ import OperationResult from 'components/OperationResult';
 import { modalReset } from 'store/actions/thunks';
 import ModalActions from 'components/ModalActions';
 import isEmpty from 'lodash/isEmpty';
+import { fetchNftDetail, fetchHotAuctions, fetchNftsBreakdown } from 'store/actions/thunks/nfts';
+import { fetchCurrentUser } from 'store/actions/thunks/users';
 
 const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
     const [selectedCategory, setSelectedCategory] = useState();
     const nftSellState = useSelector(selectors.nftSellState);
     const isSelling = nftSellState.loading;
-    const { configuration } = useContext(DappifyContext);
+    const { configuration, loadBalances } = useContext(DappifyContext);
     const network = constants.NETWORKS[configuration.chainId];
     const priceOver = configuration?.feature?.bids?.priceOver;
     const maxBid = nft?.maxBid || 0;
@@ -42,6 +44,15 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
         await dispatch(sellNft(nft, amount, selectedCategory, quantity));
     }
 
+    const handleClose = async() => {
+        dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
+        dispatch(fetchHotAuctions());
+        dispatch(fetchNftsBreakdown());
+        dispatch(fetchCurrentUser());
+        loadBalances();
+        onClose();
+    }
+
     const handleAmountChange = (e) => setAmount(parseFloat(e.target.value));
 
     const handleSelectCategory = (e) => {
@@ -52,7 +63,7 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
 
         <Dialog
             open={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             aria-labelledby="parent-modal-title"
             aria-describedby="parent-modal-description"
         >
@@ -162,7 +173,7 @@ const ModalSale = ({ isOpen=false, onClose, isBid, nft, t }) => {
                 </Grid>
             </DialogContentText>
                  <ModalActions  state={nftSellState} 
-                                onClose={onClose} 
+                                onClose={handleClose} 
                                 handleAction={handleAction} 
                                 t={t} 
                                 confirmLabel="Confirm" 

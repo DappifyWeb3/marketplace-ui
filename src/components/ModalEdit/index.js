@@ -9,12 +9,14 @@ import ConfirmationWarning from 'components/ConfirmationWarning';
 import ModalActions from 'components/ModalActions';
 import { constants } from 'react-dappify';
 import { modalReset } from 'store/actions/thunks';
+import { fetchNftDetail, fetchHotAuctions, fetchNftsBreakdown } from 'store/actions/thunks/nfts';
+import { fetchCurrentUser } from 'store/actions/thunks/users';
 
 const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
     const nftEditState = useSelector(selectors.nftEditState);
     const isEditing = nftEditState.loading;
-    const { configuration } = useContext(DappifyContext);
+    const { configuration, loadBalances } = useContext(DappifyContext);
     const network = constants.NETWORKS[configuration.chainId];
     const priceOver = configuration?.feature?.bids?.priceOver;
     const maxBid = nft?.maxBid || 0;
@@ -34,9 +36,17 @@ const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
     // eslint-disable-next-line no-use-before-define
     }, [isBid, maxBid, nft, priceOver]);
 
-
     const handleAction = async() => {
         await dispatch(editPriceNft(nft, amount));
+    }
+
+    const handleClose = async() => {
+        dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
+        dispatch(fetchHotAuctions());
+        dispatch(fetchNftsBreakdown());
+        dispatch(fetchCurrentUser());
+        loadBalances();
+        onClose();
     }
 
     const handleAmountChange = (e) => setAmount(parseFloat(e.target.value));
@@ -44,7 +54,7 @@ const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
     return (
         <Dialog
             open={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             aria-labelledby="parent-modal-title"
             aria-describedby="parent-modal-description"
         >
@@ -74,7 +84,7 @@ const ModalEdit = ({ isOpen=false, onClose, isBid, nft, t }) => {
                         <OperationResult state={nftEditState} t={t} />
                     </Grid>
                     <ModalActions   state={nftEditState} 
-                                    onClose={onClose} 
+                                    onClose={handleClose} 
                                     handleAction={handleAction} 
                                     t={t} 
                                     confirmLabel="Confirm" 
