@@ -1,7 +1,6 @@
 import * as actions from '../../actions';
 import { NFT } from 'react-dappify';
 import { getErrorMessage } from 'store/utils';
-import { fetchCurrentUser } from './users';
 
 export const fetchNfts = ({category=null, status=null}) => async (dispatch, getState) => {
 
@@ -20,10 +19,6 @@ export const withdrawNft = (nft) => async(dispatch) => {
   try {
     const txHash = await nft.withdrawFromMarketplace();
     dispatch(actions.withdrawNft.success(txHash));
-    dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
-    dispatch(fetchHotAuctions());
-    dispatch(fetchNftsBreakdown());
-    dispatch(fetchCurrentUser());
   } catch (err) {
     dispatch(actions.withdrawNft.failure(getErrorMessage(err)));
   }
@@ -139,9 +134,6 @@ export const purchaseNft = (nft, quantity) => async(dispatch) => {
   try {
     const txHash = await nft.purchase(quantity);
     dispatch(actions.purchaseNft.success(txHash));
-    dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
-    dispatch(fetchHotAuctions());
-    dispatch(fetchNftsBreakdown());
   } catch (err) {
     dispatch(actions.purchaseNft.failure(getErrorMessage(err)));
   }

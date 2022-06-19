@@ -9,12 +9,13 @@ import OperationResult from 'components/OperationResult';
 import ConfirmationWarning from 'components/ConfirmationWarning';
 import ModalActions from 'components/ModalActions';
 import { modalReset } from 'store/actions/thunks';
+import { fetchNftDetail, fetchHotAuctions, fetchNftsBreakdown } from 'store/actions/thunks/nfts';
 
 const ModalPurchase = ({ isOpen=false, onClose, isBid, nft, t }) => {
     const dispatch = useDispatch();
     const nftPurchaseState = useSelector(selectors.nftPurchaseState);
     const isPurchasing = nftPurchaseState.loading;
-    const { configuration } = useContext(DappifyContext);
+    const { configuration, loadBalances } = useContext(DappifyContext);
     const [qty, setQty] = useState(1);
     const [totalPayable, setTotalPayable] = useState(qty * nft.price);
     const network = constants.NETWORKS[configuration.chainId];
@@ -36,13 +37,21 @@ const ModalPurchase = ({ isOpen=false, onClose, isBid, nft, t }) => {
         await dispatch(purchaseNft(nft, qty));
     }
 
+    const handleClose = async() => {
+        dispatch(fetchNftDetail(nft.collection.address, nft.tokenId));
+        dispatch(fetchHotAuctions());
+        dispatch(fetchNftsBreakdown());
+        loadBalances();
+        onClose();
+    }
+
     const getOperationTitle = () => isBid ?  (<Typography variant="h5">Your bid</Typography>) : null;
 
     return (
 
         <Dialog
             open={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             aria-labelledby="parent-modal-title"
             aria-describedby="parent-modal-description"
         >
@@ -77,7 +86,7 @@ const ModalPurchase = ({ isOpen=false, onClose, isBid, nft, t }) => {
                     <OperationResult state={nftPurchaseState} t={t} />
                 </Grid>
                 <ModalActions  state={nftPurchaseState} 
-                                onClose={onClose} 
+                                onClose={handleClose} 
                                 handleAction={handleAction} 
                                 t={t} 
                                 confirmLabel="Purchase" 

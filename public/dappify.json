@@ -3,10 +3,10 @@
     "name": "NFT Marketplace",
     "description": "Buy and sell tokenized items in a custom nft marketplace",
     "source": "https://github.com/DappifyWeb3/marketplace-ui",
-    "guide": "https://github.com/DappifyWeb3/marketplace-ui",
+    "guide": "https://github.com/DappifyWeb3/marketplace-ui/wiki",
     "image": "https://i.ibb.co/SfZyfPd/Screenshot-2022-06-09-at-07-49-35.png",
     "sample": "https://chainbeatz.dappify.us/",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "category": "nft",
     "admin": "/admin",
     "contract": {

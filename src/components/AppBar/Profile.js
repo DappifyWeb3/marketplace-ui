@@ -45,16 +45,17 @@ export default function Profile({ t }) {
         (<Identicon string={currentUser.wallet} size={40} bg={theme.palette.primary.main} />) : 
         (<Avatar sx={imgSize} ><AccountCircleTwoToneIcon sx={imgSize}/></Avatar>)
 
-        const [anchorEl, setAnchorEl] = useState(null);
-        const open = Boolean(anchorEl);
-        const handleClick = (event) => {
-          isAuthenticated ? 
-            setAnchorEl(event.currentTarget) :
-            navigate('/wallet');
-        };
-        const handleClose = () => {
-          setAnchorEl(null);
-        };
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+      isAuthenticated ? 
+        setAnchorEl(event.currentTarget) :
+        navigate('/wallet');
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
     const handleLogout = async () => {
         await logout();
