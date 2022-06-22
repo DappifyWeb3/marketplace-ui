@@ -27,8 +27,8 @@ jobs:
         run: yarn install
       - name: Build
         env: 
-          REACT_APP_MORALIS_APP_ID: ${{ secrets.MORALIS_APP_ID_DEV }}
-          REACT_APP_MORALIS_SERVER_URL: ${{ secrets.MORALIS_SERVER_URL_DEV }}
+          REACT_APP_MORALIS_APP_ID: ${{ secrets.MORALIS_APP_ID }}
+          REACT_APP_MORALIS_SERVER_URL: ${{ secrets.MORALIS_SERVER_URL }}
           REACT_APP_MORALIS_API_KEY: ${{ secrets.MORALIS_API_KEY }}
           REACT_APP_MORALIS_SPEEDY_NODES_KEY: ${{ secrets.MORALIS_API_KEY }}
           REACT_APP_PINATA_KEY: ${{ secrets.PINATA_API_KEY }}
