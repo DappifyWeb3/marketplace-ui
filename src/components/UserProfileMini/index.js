@@ -27,7 +27,7 @@ const UserProfileMini = ({ profile = {} }) => {
                             cursor: 'pointer'
                         }
                     }} 
-                    onClick={() => navigate(`/profile/${profile.wallet}`)}>
+                    onClick={() => navigate(`${process.env.REACT_APP_TEMPLATE_NAME}/profile/${profile.wallet}`)}>
                         <Typography fontWeight="900">
                             {profile.username}
                         </Typography>

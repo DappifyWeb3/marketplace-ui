@@ -3,7 +3,7 @@
     "name": "NFT Marketplace",
     "description": "Buy and sell tokenized items",
     "source": "https://github.com/DappifyWeb3/marketplace-ui",
-    "guide": "https://github.com/DappifyWeb3/marketplace-ui",
+    "guide": "https://mirage-property-c46.notion.site/NFT-Marketplace-7a97595aacd944988225cf7d2a493699",
     "admin": "/admin",
     "contract": {
       "0x61": "0x275E6A2aD3598189a2897F5b6af2F54E7cb623eF",

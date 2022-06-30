@@ -6,7 +6,7 @@ const Content = ({ index, collection, t }) => {
   const navigate = useNavigate();
 
   const goToCollection = () => {
-    navigate(`/profile/${collection.author.id}`);
+    navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}/profile/${collection.author.id}`);
   };
 
   return (

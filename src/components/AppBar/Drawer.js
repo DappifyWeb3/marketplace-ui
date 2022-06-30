@@ -13,7 +13,7 @@ export default function DrawerMenu({ open=false, onClose }) {
 
     const handleClose = async () => {
         await logout();
-        navigate('/');
+        navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}`);
         onClose();
     }
 

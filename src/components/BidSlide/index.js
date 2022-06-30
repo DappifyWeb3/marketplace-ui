@@ -50,7 +50,7 @@ const BidSlide = ({nft, usdPrice}) => {
                         <div className="spacer-10"></div>
                         <div className="d-buttons">
                             <Button sx={{ mr: 2, fontSize: '1.25em' }} variant="contained" size="large" onClick={() => setOpenCheckoutbid(true)}>{t('Purchase')}</Button>
-                            <Button sx={{ fontSize: '1.25em' }} variant="contained" size="large" onClick={() => navigate(`/item/${nft.collection.address}/${nft.tokenId}`)}>{t('View artwork')}</Button>
+                            <Button sx={{ fontSize: '1.25em' }} variant="contained" size="large" onClick={() => navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}/item/${nft.collection.address}/${nft.tokenId}`)}>{t('View artwork')}</Button>
                         </div>
                     </div>
                 </div>

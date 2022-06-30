@@ -32,7 +32,7 @@ const News = () => {
                             <span className="p-date">{moment(blog?.attributes?.createdAt ? blog.attributes.createdAt :blog.timestamp).format('L, LT')}</span>
                             <h4><span>{blog?.attributes?.title ? blog.attributes.title : blog.title}<span></span></span></h4>
                             <p>{blog?.attributes?.content ? blog.attributes.content.substring(0, 134): blog.content.substring(0, 134)}...</p>
-                            <span onClick={() => navigateTo(`news/${blog.id}`)} className="btn-main">Read more</span>
+                            <span onClick={() => navigateTo(`/${process.env.REACT_APP_TEMPLATE_NAME}/news/${blog.id}`)} className="btn-main">Read more</span>
                         </div>
                     </div>
                 </div>

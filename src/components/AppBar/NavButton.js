@@ -34,7 +34,7 @@ export default function NavButton({ link, label }) {
                 }
             }}
         >
-            {isLocalLink && (<Link to={`/${link}`}>{label}</Link>)}
+            {isLocalLink && (<Link to={`/${process.env.REACT_APP_TEMPLATE_NAME}/${link}`}>{label}</Link>)}
             {!isLocalLink && (<a href={link} target="_blank" rel="noreferrer">{label}</a>)}
         </Button>
     );

@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { Router } from '@reach/router';
+import { Router, Redirect } from '@reach/router';
 import { useNavigate } from '@reach/router';
 import Create from 'pages/Create';
 import CreateOption from 'pages/Create/Options';
@@ -33,7 +33,7 @@ const Routes = () => {
 
   const GuardedRoute = ({ component: Component, t }) => {
     const navigate = useNavigate();
-    if (!isAuthenticated)  navigate('/');
+    if (!isAuthenticated)  navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}`);
     return <Component t={t}/>;
   }
 
@@ -41,24 +41,25 @@ const Routes = () => {
     <><CssBaseline />
         <Header t={t} />
             <Router>
-            <ScrollTop exact path="/">
-                <Home exact path="/" t={t} />
-                <Explore exact path="/explore" t={t} />
-                <Collection exact path="/collection/:shortUrl" />
-                <Item exact path="/item/:contractAddress/:tokenId" t={t} />
-                <Auction exact path="/auction" />
-                <HelpCenter exact path="/help" />
-                <Activity exact path="/activity" t={t} />
-                <Ranking exact path="/ranking" />
-                <News exact path="/news" />
-                <NewsItem exact path="/news/:postId" />
-                <Create exact path="/create" />
-                <CreateOption exact path="/options" />
-                <Wallet exact path="/wallet" t={t} />
-                <Author exact path='/profile/:address' t={t} />
-                <GuardedRoute path='/profile/:address/manage' component={Profile} t={t} />
-            </ScrollTop>
-        </Router>
+              <ScrollTop path={`/${process.env.REACT_APP_TEMPLATE_NAME}`}>
+                  <Home exact default path={`/`} t={t} />
+                  <Explore exact path={`/explore`} t={t} />
+                  <Collection exact path={`/collection/:shortUrl`} />
+                  <Item exact path={`/item/:contractAddress/:tokenId`} t={t} />
+                  <Auction exact path={`/auction`} />
+                  <HelpCenter exact path={`/help`} />
+                  <Activity exact path={`/activity`} t={t} />
+                  <Ranking exact path={`/ranking`} />
+                  <News exact path={`/news`} />
+                  <NewsItem exact path={`/news/:postId`} />
+                  <Create exact path={`/create`} />
+                  <CreateOption exact path={`/options`} />
+                  <Wallet exact path={`/wallet`} t={t} />
+                  <Author exact path={`/profile/:address`} t={t} />
+                  <GuardedRoute exact path={`/profile/:address/manage`} component={Profile} t={t} />
+              </ScrollTop>
+              <Redirect noThrow={true} from='/' to={`/${process.env.REACT_APP_TEMPLATE_NAME}`} />
+          </Router>
       <ScrollToTopBtn /></>
 
   )

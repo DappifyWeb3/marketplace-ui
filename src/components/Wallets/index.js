@@ -19,7 +19,7 @@ const Wallet= () => {
             const loggedInUser = await authenticate(walletProvider.payload);
             if (loggedInUser) {
                 dispatch(fetchCurrentUser());
-                navigate('/');
+                navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}`);
             }
         } catch (e) {
         }

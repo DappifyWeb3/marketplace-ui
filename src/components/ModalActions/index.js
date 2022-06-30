@@ -64,7 +64,7 @@ const ModalActions = ({ state, onClose, handleAction, t, confirmLabel, loading }
     const noAuth = !isAuthenticated && (
         <Grid container sx={{ mt: 3 }}>
             <Button variant="contained" color="primary" onClick={() => {
-                navigate('/wallet');
+                navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}/wallet`);
             }} fullWidth>
                 {t('Connect your wallet')}
             </Button>

@@ -1,6 +1,6 @@
 {
   "name": "dappify-marketplace-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -51,6 +51,8 @@
     "webpack": "4.44.2"
   },
   "scripts": {
+    "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env react-scripts start",
+    "build": "env-cmd -f .env react-scripts build",
     "start:cli": "react-scripts start",
     "build:cli":"react-scripts build",
     "test": "react-scripts test",
