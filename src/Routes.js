@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { Router, Route, Redirect } from '@reach/router';
+import { Router, Redirect } from '@reach/router';
 import { useNavigate } from '@reach/router';
 import Create from 'pages/Create';
 import CreateOption from 'pages/Create/Options';
