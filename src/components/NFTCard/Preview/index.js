@@ -14,7 +14,7 @@ const Preview = ({ nft }) => {
             height: '275px',
             overflow: 'hidden',
             cursor: 'pointer'
-        }} onClick={() => navigate(`/item/${nft?.collection?.address}/${nft?.tokenId}`)}>
+        }} onClick={() => navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}/item/${nft?.collection?.address}/${nft?.tokenId}`)}>
             {!nft.metadata.image && 
                 <div className="lazy nft__placeholder">
                     {nft.metadata.name}

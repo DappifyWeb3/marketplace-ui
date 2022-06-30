@@ -79,7 +79,7 @@ const Createpage = ({t}) => {
                     '&:hover': {
                       backgroundColor: theme.palette.action.hover,
                     },
-                }} onClick={() => navigate('/create')}>
+                }} onClick={() => navigate(`${process.env.REACT_APP_TEMPLATE_NAME}/create`)}>
                     <img src="./img/misc/coll-single.png" alt="single"/>
                     <h3 style={{ marginTop: '10px' }}>Single</h3>
                     <Chip color="primary" label="ERC-721" />

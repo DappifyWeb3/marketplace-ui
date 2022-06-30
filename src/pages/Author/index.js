@@ -68,7 +68,7 @@ const Author = ({ address, t }) => {
                 <Typography sx={{ fontSize: '1em', fontWeight: 'bold', color: theme.palette.text.primary }}>{author.webite}</Typography>
               </Grid>
               {isSelf &&(<Grid item xs={12}>
-                <Button variant="contained" onClick={() => navigate(`/profile/${author.wallet}/manage`)}>{t('Edit profile')}</Button>
+                <Button variant="contained" onClick={() => navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}/profile/${author.wallet}/manage`)}>{t('Edit profile')}</Button>
               </Grid>)}
               <Grid item xs={12} sx={{width:'100%'}} >
                 <Divider />

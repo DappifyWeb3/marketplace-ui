@@ -9,7 +9,7 @@ const Categories= ({ onSelect }) => {
     const [categories] = useState(Property.findAllWithType({type:'category'}));
 
     const handleSelect = (cat) =>{
-        navigate(`/explore?category=${toUri(cat.key)}`);
+        navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}/explore?category=${toUri(cat.key)}`);
     };
 
     const displayCategories = () => {

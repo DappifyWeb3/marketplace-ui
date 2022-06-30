@@ -51,7 +51,7 @@ export default function Profile({ t }) {
     const handleClick = (event) => {
       isAuthenticated ? 
         setAnchorEl(event.currentTarget) :
-        navigate('/wallet');
+        navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}/wallet`);
     };
     const handleClose = () => {
       setAnchorEl(null);
@@ -59,7 +59,7 @@ export default function Profile({ t }) {
 
     const handleLogout = async () => {
         await logout();
-        navigate('/');
+        navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}`);
     }
 
     const goToNetwork = async () => {
@@ -162,7 +162,7 @@ export default function Profile({ t }) {
                   {renderNetwork()}
               </Box>
               <Divider sx={{ my: 1, opacity: 0.15 }}/>
-              <MenuItem onClick={() => navigate(`/profile/${currentUser.wallet}`)} sx={{ fontSize:'1em', color: theme.palette.text.secondary }}>
+              <MenuItem onClick={() => navigate(`/${process.env.REACT_APP_TEMPLATE_NAME}/profile/${currentUser.wallet}`)} sx={{ fontSize:'1em', color: theme.palette.text.secondary }}>
                 <ListItemIcon>
                   <Avatar sx={{ height: 28, width: 28 }}>
                     <PersonOutlineIcon/>

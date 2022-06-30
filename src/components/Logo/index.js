@@ -8,7 +8,7 @@ const Logo = () => {
     return (
         <div className='logo px-0'>
             <div className='navbar-title navbar-item'>
-                <NavLink to="/">
+                <NavLink to={`/${process.env.REACT_APP_TEMPLATE_NAME}`}>
                     <Box sx={{
                         backgroundImage: `url(${configuration.logo})`,
                         backgroundSize: 'contain',

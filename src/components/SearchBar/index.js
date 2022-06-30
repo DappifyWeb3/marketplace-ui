@@ -49,11 +49,11 @@ export default function SearchBar({t}) {
     const getLink = (option) => {
       switch(option.className) {
         case 'NFTs':
-          return `/item/${option.obj.collection.address}/${option.obj.tokenId}`;
+          return `/${process.env.REACT_APP_TEMPLATE_NAME}/item/${option.obj.collection.address}/${option.obj.tokenId}`;
         case 'Collections':
-          return `/collection/${option.obj.address}`;
+          return `/${process.env.REACT_APP_TEMPLATE_NAME}/collection/${option.obj.address}`;
         case 'Accounts':
-          return `/profile/${option.obj.wallet}`;
+          return `/${process.env.REACT_APP_TEMPLATE_NAME}/profile/${option.obj.wallet}`;
         default:
           return '/';
       }
