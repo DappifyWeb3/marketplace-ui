@@ -18,6 +18,7 @@
     "chai": "^4.3.6",
     "cra-template": "1.1.2",
     "dotenv": "^10.0.0",
+    "env-cmd": "^10.1.0",
     "ethers": "^5.6.2",
     "font-awesome": "^4.7.0",
     "fortmatic": "^2.2.1",
@@ -54,7 +55,7 @@
     "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem env-cmd -f .env react-scripts start",
     "build": "env-cmd -f .env react-scripts build",
     "start:cli": "react-scripts start",
-    "build:cli":"react-scripts build",
+    "build:cli": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
