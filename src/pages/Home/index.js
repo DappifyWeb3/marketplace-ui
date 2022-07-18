@@ -148,7 +148,7 @@ const Home = ({t}) => {
       {
         "type": "static",
         "metadata": {
-          "cta": "/explore"
+          "cta": "marketplace/explore"
         }
       },
       {
